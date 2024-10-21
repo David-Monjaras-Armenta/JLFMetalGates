@@ -82,9 +82,9 @@ class ContactModel
     }
 
     /**
-     * Registra un contacto con los datos especificados
+     * Modifica el estatus de un contacto
      * 
-     * @param int $id estatus del contacto
+     * @param int $id id del contacto
      * @return boolean true en caso de que se actualice el contacto, false en caso contrario
      */
     public function update($id)
