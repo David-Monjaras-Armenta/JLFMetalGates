@@ -46,6 +46,7 @@ class DB
         try {
             if ($this->conn == null) {
                 $this->conn = new mysqli($this->host, $this->user, $this->password, $this->database);
+                $this->conn->autocommit(false);
             }
         } catch (\Throwable $th) {
             $this->conn = null;

@@ -32,10 +32,10 @@ class UserModel
             if ($result->num_rows > 0) {
                 while ($row = $result->fetch_assoc()) {
                     $user = [
-                        "id" => $row("id"),
-                        "email" => $row("id"),
-                        "role" => $row("i_rolw"),
-                        "status" => $row("b_status"),
+                        "id" => intval($row["id"]),
+                        "email" => strval($row["v_email"]),
+                        "role" => intval($row["i_role"]),
+                        "status" => boolval($row["b_status"]),
                     ];
                 }
             }
