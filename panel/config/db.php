@@ -7,15 +7,6 @@ use Dotenv\Dotenv;
 $dotenv = Dotenv::createImmutable(dirname(__DIR__, 2));
 $dotenv->load();
 
-# Error de conexión
-class DB_Connection_Failed extends Exception
-{
-    public function __construct($mensaje)
-    {
-        parent::__construct("E1001: " . $mensaje);
-    }
-}
-
 class DB
 {
     private static $instance = null;
@@ -55,10 +46,6 @@ class DB
         try {
             if ($this->conn == null) {
                 $this->conn = new mysqli($this->host, $this->user, $this->password, $this->database);
-
-                if (mysqli_ping($this->conn)) {
-                    throw new DB_Connection_Failed("No fue posible conectar con la base de datos");
-                }
             }
         } catch (\Throwable $th) {
             $this->conn = null;
