@@ -342,19 +342,6 @@ td {
     width: 40px;
 }
 
-.collapse-menu-button {
-    display: none;
-    width: 30px;
-    height: 30px;
-    background-color: transparent;
-    border: none;
-    cursor: pointer;
-    color: var(--neutral-100);
-    font-size: 18px;
-    align-items: center;
-    justify-content: center;
-}
-
 .dropdown {
     position: relative;
     display: inline-block;
@@ -401,8 +388,83 @@ td {
     color: var(--neutral-100);
 }
 
+.collapse > button {
+    display: none;
+    width: 30px;
+    height: 30px;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    color: var(--neutral-100);
+    font-size: 18px;
+    align-items: center;
+    justify-content: center;
+}
+
+.collapse > div.show {
+    display: flex;
+}
+
+.collapse > div {
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.3);
+    display: none;
+    flex-flow: row nowrap;
+    justify-content: flex-end;
+    position: fixed;
+    top: 0;
+    right: 0;
+    backdrop-filter: blur(5px);
+}
+
+.collapse > div > .menu {
+    width: 40%;
+    height: 100%;
+    background-color: var(--neutral-40);
+    display: flex;
+    flex-flow: column nowrap;
+    padding: 12px;
+}
+
+.collapse > div > .menu > ul {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: flex-start;
+    gap: 24px;
+    margin: 0;
+    padding: 0;
+}
+
+.collapse > div > .menu > ul > li {
+    list-style: none;
+    display: flex;
+    flex-flow: row nowrap;
+    gap: 8px;
+    align-items: center;
+}
+
+.collapse > div > .menu > ul > li > a {
+    text-decoration: none;
+    color: var(--neutral-80);
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.collapse > div > .menu > ul > li > a:hover {
+    color: var(--neutral-100);
+}
+
+.collapse > div > .menu > .user > button {
+    color: var(--neutral-100);
+    cursor: pointer;
+    background-color: transparent;
+    border: none;
+    font-size: 18px;
+}
+
 @media (max-width: 640px) {
-    .collapse-menu-button {
+    .collapse > button {
         display: flex;
     }
 
