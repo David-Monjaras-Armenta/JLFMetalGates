@@ -1,7 +1,8 @@
 <?php
 
-require "../config/db.php";
-require "./content.php";
+include_once "../config/db.php";
+include_once "./content.php";
+include_once '../utils/logs.php';
 
 class SectionModel
 {
@@ -24,7 +25,7 @@ class SectionModel
         $sections = [];
         try {
             $conn = $this->db->get_connection();
-            $stmt = $conn->prepare("SELECT * FROM cat_section WHERE b_status = 1 ORDER BY i_order ASC");
+            $stmt = $conn->prepare("SELECT * FROM cat_section WHERE b_status = 1");
 
             $stmt->execute();
             $result = $stmt->get_result();
@@ -34,7 +35,7 @@ class SectionModel
                     $section = [
                         "id" => intval($row["id"]),
                         "name" => strval($row["v_name"]),
-                        "email" => intval($row["i_order"]),
+                        "email" => strval($row["v_background"]),
                         "status" => boolval($row["b_status"]),
                         "en" => $this->contentModel->read(2, intval($row["id"])),
                         "es" => $this->contentModel->read(1, intval($row["id"])),
@@ -73,7 +74,7 @@ class SectionModel
                     $section = [
                         "id" => intval($row["id"]),
                         "name" => strval($row["v_name"]),
-                        "email" => intval($row["i_order"]),
+                        "email" => strval($row["v_background"]),
                         "status" => boolval($row["b_status"]),
                         "en" => $this->contentModel->read(2, intval($row["id"])),
                         "es" => $this->contentModel->read(1, intval($row["id"])),

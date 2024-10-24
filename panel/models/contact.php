@@ -1,6 +1,7 @@
 <?php
 
-require "../config/db.php";
+include_once "../config/db.php";
+include_once '../utils/logs.php';
 
 class ContactModel
 {

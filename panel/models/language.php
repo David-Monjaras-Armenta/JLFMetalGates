@@ -3,7 +3,7 @@
 include_once "../config/db.php";
 include_once '../utils/logs.php';
 
-class UserModel
+class LanguageModel
 {
     private $db = null;
 
@@ -13,39 +13,37 @@ class UserModel
     }
 
     /**
-     * Consulta el usuario con el correo y contraseña especificados
+     * Consulta los idiomas del sistema
      * 
-     * @param string $email correo del usuario
-     * @param string $password contraseña del usuario (cifrada en SHA256)
-     * @return array arreglo asosiativo con los datos del usuario
+     * @return array arreglo de arreglos asosiativos con los idiomas
      */
-    public function read_by_email($email, $password)
+    public function read()
     {
-        $user = [];
+        $languages = [];
         try {
             $conn = $this->db->get_connection();
-            $stmt = $conn->prepare("SELECT * FROM tbl_user WHERE v_email = ? AND v_password = ?");
-            $stmt->bind_param("ss", $email, $password);
+            $stmt = $conn->prepare("SELECT * FROM cat_language");
 
             $stmt->execute();
             $result = $stmt->get_result();
 
             if ($result->num_rows > 0) {
                 while ($row = $result->fetch_assoc()) {
-                    $user = [
+                    $language = [
                         "id" => intval($row["id"]),
-                        "email" => strval($row["v_email"]),
-                        "role" => intval($row["i_role"]),
+                        "icon" => strval($row["v_icon"]),
+                        "name" => strval($row["v_name"]),
                         "status" => boolval($row["b_status"]),
                     ];
+                    array_push($languages, $language);
                 }
             }
             $stmt->close();
         } catch (\Throwable $th) {
-            $user = [];
+            $languages = [];
             Logger::log(Logger::$ERROR, $th);
         } finally {
-            return $user;
+            return $languages;
         }
     }
 }

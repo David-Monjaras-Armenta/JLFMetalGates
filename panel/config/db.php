@@ -1,6 +1,6 @@
 <?php
-require '../../vendor/autoload.php';
-require '../utils/logs.php';
+include_once '../../vendor/autoload.php';
+include_once '../utils/logs.php';
 
 # Carga de las variables de entorno
 use Dotenv\Dotenv;
