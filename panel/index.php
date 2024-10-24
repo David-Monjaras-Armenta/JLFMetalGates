@@ -18,7 +18,7 @@ require_once './controllers/' . $controller . '.php';
 $controller = new $controller;
 
 # Se busca el método del controlador
-$method = null;
+$method = "index";
 if (isset($url[1])) {
     if (method_exists($controller, $url[1])) {
         $method = $url[1];

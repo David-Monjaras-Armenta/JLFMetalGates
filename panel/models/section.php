@@ -1,8 +1,8 @@
 <?php
 
-include_once "../config/db.php";
-include_once "./content.php";
-include_once '../utils/logs.php';
+include_once dirname(__DIR__, 1) . "/config/db.php";
+include_once dirname(__DIR__, 1) . '/utils/logs.php';
+include_once dirname(__DIR__, 1) . '/models/content.php';
 
 class SectionModel
 {

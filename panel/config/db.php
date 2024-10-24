@@ -1,6 +1,6 @@
 <?php
-include_once '../../vendor/autoload.php';
-include_once '../utils/logs.php';
+include_once dirname(__DIR__, 2) . '/vendor/autoload.php';
+include_once dirname(__DIR__, 1) . '/utils/logs.php';
 
 # Carga de las variables de entorno
 use Dotenv\Dotenv;
