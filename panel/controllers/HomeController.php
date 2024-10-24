@@ -24,7 +24,7 @@ class HomeController
 
                 if ($user) {
                     Security::setCookie($_POST["email"]);
-                    header("Location: /contact");
+                    header("Location: http://localhost/panel/contact");
                 } else {
                     Render::render_view("home/index", ["error" => "Correo y/o contraseña inválidos"]);
                 }

@@ -1,3 +1,14 @@
+<?php
+include_once dirname(__DIR__, 3) . '/vendor/autoload.php';
+
+use Dotenv\Dotenv;
+
+$dotenv = Dotenv::createImmutable(dirname(__DIR__, 3));
+$dotenv->load();
+
+$domain = $_ENV["DOMAIN"];
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -6,7 +17,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Panel JLF Metal Gates</title>
 
-    <link rel="stylesheet" href="../assets/css/panel.css">
+    <link rel="stylesheet" href="<?= $domain ?>/panel/assets/css/panel.css">
 </head>
 
 <body>

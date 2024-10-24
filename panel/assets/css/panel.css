@@ -38,6 +38,7 @@ body {
     width: 100vw;
     margin: 0;
     background: linear-gradient(var(--neutral-90), var(--neutral-80));
+    overflow: hidden;
 }
 
 h1,h2,h3,h4,h5,h6,p,label {
@@ -125,6 +126,15 @@ input[type="submit"]:hover {
     height: 100%;
 }
 
+.container {
+    display: flex;
+    flex-flow: column nowrap;
+    width: 100%;
+    height: 100%;
+    padding: 24px;
+    overflow: hidden;
+}
+
 .form-login {
     display: flex;
     flex-flow: column nowrap;
@@ -151,4 +161,296 @@ input[type="submit"]:hover {
     border-radius: 8px;
     background-color: var(--danger-regular);
     color: var(--neutral-100);
+}
+
+nav {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    gap: 24px;
+    padding: 12px 24px;
+    background-color: var(--neutral-40);
+    position: sticky;
+    top: 0;
+    left: 0;
+    width: 100%;
+}
+
+nav > ul {
+    flex: 1;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: flex-start;
+    gap: 24px;
+    margin: 0;
+    padding: 0;
+}
+
+nav > ul > li {
+    list-style: none;
+    display: flex;
+    flex-flow: row nowrap;
+    gap: 8px;
+    align-items: center;
+}
+
+nav > ul > li > a {
+    text-decoration: none;
+    color: var(--neutral-80);
+    font-size: 18px;
+    font-weight: 700;
+}
+
+nav > ul > li > a:hover {
+    color: var(--neutral-100);
+}
+
+nav > .brand {
+    padding-right: 24px;
+    border-right: 2px solid var(--neutral-100);
+}
+
+nav > .brand > h2 {
+    margin: 0;
+    color: var(--neutral-100);
+}
+
+nav > .user > button {
+    color: var(--neutral-100);
+    cursor: pointer;
+    background-color: transparent;
+    border: none;
+    font-size: 18px;
+}
+
+table {
+    width: clamp(640px, 100%, 1280px);
+    border-collapse: collapse;
+}
+
+th {
+    padding: 12px;
+    text-align: start;
+}
+
+tr {
+    background-color: var(--neutral-100);
+}
+
+tr:nth-child(even) {
+    background-color: var(--neutral-80);
+}
+
+td {
+    text-overflow: ellipsis;
+    padding: 12px;
+}
+
+.table {
+    display: flex;
+    width: 100%;
+    overflow-x: auto;
+}
+
+.icon-button {
+    background-color: var(--success-light);
+    color: var(--neutral-10);
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    text-decoration: none;
+}
+
+.icon-button:hover {
+    opacity: 0.8;
+}
+
+.paginator {
+    display: flex;
+    flex-flow: row nowrap;
+    gap: 8px;
+    padding: 12px;
+}
+
+.paginator > a {
+    background-color: var(--neutral-70);
+    border: none;
+    border-radius: 8px;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    color: var(--neutral-100);
+}
+
+.notify {
+    position: fixed;
+    bottom: 16px;
+    left: 16px;
+    padding: 12px;
+    border-radius: 8px;
+    box-shadow: 0 0 24px 4px rgba(0, 0, 0, 0.2);
+    transition: opacity 3s ease-out;
+}
+
+.notify.error {
+    background-color: var(--danger-regular);
+    color: var(--neutral-100);
+}
+
+.notify.success {
+    background-color: var(--success-regular);
+    color: var(--neutral-10);
+}
+
+.notify.hide {
+    opacity: 0;
+}
+
+.notify > h5 {
+    margin: 0;
+}
+
+.search-bar {
+    display: flex;
+    flex-flow: row nowrap;
+    gap: 16px;
+    padding: 12px 24px;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+}
+
+.search-bar > input[type="text"] {
+    flex: 1;
+}
+
+.search-bar > button {
+    background-color: var(--info-regular);
+    color: var(--neutral-10);
+    border-color: var(--info-regular);
+    cursor: pointer;
+    font-weight: 700;
+    border-style: solid;
+    border-radius: 8px;
+    height: 40px;
+    width: 40px;
+}
+
+.collapse-menu-button {
+    display: none;
+    width: 30px;
+    height: 30px;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    color: var(--neutral-100);
+    font-size: 18px;
+    align-items: center;
+    justify-content: center;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown button {
+    background-color: transparent;
+    color: var(--neutral-80);
+    padding: 0;
+    font-size: 18px;
+    border: none;
+    cursor: pointer;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: var(--neutral-100);
+    min-width: 160px;
+    box-shadow: 0px 8px 16px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+.dropdown-content.left {
+    right: 16px;
+}
+
+.dropdown-content a {
+    color: var(--neutral-10);
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-content a:hover {
+    background-color: var(--neutral-80);
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.dropdown:hover button {
+    color: var(--neutral-100);
+}
+
+@media (max-width: 640px) {
+    .collapse-menu-button {
+        display: flex;
+    }
+
+    nav > .brand {
+        border: none;
+        flex: 1;
+    }
+
+    nav > ul {
+        display: none;
+    }
+
+    nav > .user {
+        display: none;
+    }
+
+    h1 {
+        font-size: 28px;
+        margin-bottom: 12px;
+    }
+    
+    h2 {
+        font-size: 24px;
+        margin-bottom: 12px;
+    }
+    
+    h3 {
+        font-size: 20px;
+        margin-bottom: 8px;
+    }
+    
+    h4 {
+        font-size: 16px;
+        margin-bottom: 8px;
+    }
+    
+    h5 {
+        font-size: 12px;
+        margin-bottom: 4px;
+    }
+    
+    h6 {
+        font-size: 8px;
+        margin-bottom: 4px;
+    }
+    
+    p,label {
+        font-size: 12px;
+        font-weight: 400;
+    }
 }
