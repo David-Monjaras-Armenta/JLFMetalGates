@@ -393,6 +393,10 @@ class CmsController
         $data = [];
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (isset($_POST['id_en'])) {
+                if ($_FILES["image"]["size"] > 0) {
+                    $image = ImageHandler::upload($_FILES["image"], "pictures/contact", "icon_{$_POST['name_en']}");
+                }
+
                 $en = [
                     "id" => intval($_POST['id_en']),
                     "name" => $_POST["name_en"],
@@ -407,9 +411,9 @@ class CmsController
                     "text" => $_POST["text_en"],
                 ];
 
-                $result_en = $this->contentModel->update($en["id"], $en["name"], $en["title"], $en["text"], "");
+                $result_en = $this->contentModel->update($en["id"], $en["name"], $en["title"], $en["text"], $image);
 
-                $result_es = $this->contentModel->update($es["id"], $es["name"], $es["title"], $es["text"], "");
+                $result_es = $this->contentModel->update($es["id"], $es["name"], $es["title"], $es["text"], $image);
 
                 if ($result_en && $result_es) {
                     $data["notify"] = [
@@ -423,27 +427,36 @@ class CmsController
                     ];
                 }
             } else {
-                $en = [
-                    "name" => $_POST["name"],
-                    "title" => $_POST["title_en"],
-                    "text" => $_POST["text_en"],
-                ];
+                if ($_FILES["image"]["size"] > 0) {
+                    $image = ImageHandler::upload($_FILES["image"], "pictures/contact", "icon_{$_POST['name']}");
 
-                $es = [
-                    "name" => $_POST["name"],
-                    "title" => $_POST["title_es"],
-                    "text" => $_POST["text_en"],
-                ];
-
-                $result_en = $this->contentModel->create($en["name"], $en["title"], $en["text"], "", 6, 2);
-
-                $result_es = $this->contentModel->create($es["name"], $es["title"], $es["text"], "", 6, 1);
-
-                if ($result_en && $result_es) {
-                    $data["notify"] = [
-                        "type" => "success",
-                        "message" => "Elemento creado"
+                    $en = [
+                        "name" => $_POST["name"],
+                        "title" => $_POST["title_en"],
+                        "text" => $_POST["text_en"],
                     ];
+    
+                    $es = [
+                        "name" => $_POST["name"],
+                        "title" => $_POST["title_es"],
+                        "text" => $_POST["text_en"],
+                    ];
+    
+                    $result_en = $this->contentModel->create($en["name"], $en["title"], $en["text"], $image, 6, 2);
+    
+                    $result_es = $this->contentModel->create($es["name"], $es["title"], $es["text"], $image, 6, 1);
+    
+                    if ($result_en && $result_es) {
+                        $data["notify"] = [
+                            "type" => "success",
+                            "message" => "Elemento creado"
+                        ];
+                    } else {
+                        $data["notify"] = [
+                            "type" => "error",
+                            "message" => "Error al crear el elemento"
+                        ];
+                    }
                 } else {
                     $data["notify"] = [
                         "type" => "error",

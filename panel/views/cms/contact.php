@@ -51,7 +51,7 @@ if (!empty($search)) {
             <button onclick="showCreate()"><i class="fa-solid fa-plus"></i></button>
         </div>
         <div id="create" class="card hidden" style="gap: 12px;">
-            <form action="" method="POST">
+            <form action="" method="POST" enctype="multipart/form-data">
                 <div class="group">
                     <label for="name">Nombre:</label>
                     <input type="text" id="name" name="name" required>
@@ -86,8 +86,7 @@ if (!empty($search)) {
 
                 <div class="group">
                         <label for="image">Icono:</label>
-                        <input type="text" readonly>
-                        <input type="file" id="image" name="image" hidden>
+                        <input type="file" id="image" name="image" accept="image/svg+xml">
                     </div>
 
                 <input type="submit" value="Enviar">
@@ -104,7 +103,7 @@ if (!empty($search)) {
             $images = explode(",", $enContent['image']);
         ?>
             <div class="card">
-                <form action="" method="POST">
+                <form action="" method="POST" enctype="multipart/form-data">
                     <input type="hidden" name="id_en" value="<?php echo $enContent['id']; ?>">
                     <input type="hidden" name="id_es" value="<?php echo $esContent['id']; ?>">
 
@@ -142,8 +141,8 @@ if (!empty($search)) {
 
                     <div class="group">
                         <label for="image<?php echo $enContent['id']; ?>">Icono:</label>
-                        <input type="text" value="<?php echo $images[0]; ?>" readonly>
-                        <input type="file" id="image<?php echo $enContent['id']; ?>" name="image" hidden>
+                        <img src="<?= $domain ?>/panel/images/<?= $enContent['image'] ?>" onclick="toFocus('image_<?php echo $enContent['id']; ?>')">
+                        <input type="file" id="image_<?php echo $enContent['id']; ?>" name="image" hidden accept="image/svg+xml">
                     </div>
 
                     <input type="submit" value="Enviar">
@@ -170,6 +169,10 @@ if (!empty($search)) {
     <script>
         function showCreate() {
             document.getElementById("create").classList.remove("hidden")
+        }
+
+        function toFocus(id) {
+            document.getElementById(id).click();
         }
     </script>
 </body>

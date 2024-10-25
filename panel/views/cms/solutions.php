@@ -72,11 +72,11 @@ if (!empty($search)) {
                 <div class="row">
                     <div class="column">
                         <label for="image_before">Imagen Antes:</label>
-                        <input type="file" id="image_before" name="image_before">
+                        <input type="file" id="image_before" name="image_before" accept="image/webp, image/jpeg">
                     </div>
                     <div class="column">
                         <label for="image_after">Imagen Después:</label>
-                        <input type="file" id="image_after" name="image_after">
+                        <input type="file" id="image_after" name="image_after" accept="image/webp, image/jpeg">
                     </div>
                 </div>
 
@@ -124,7 +124,7 @@ if (!empty($search)) {
                         <div class="column">
                             <label for="image_after_<?php echo $enContent['id']; ?>">Imagen Después:</label>
                             <img src="<?= $domain ?>/panel/images/<?= $images[1] ?>" onclick="toFocus('image_after_<?php echo $enContent['id']; ?>')">
-                            <input type="file" id="image_after_<?php echo $enContent['id']; ?>" name="image_after" hidden>
+                            <input type="file" id="image_after_<?php echo $enContent['id']; ?>" name="image_after" hidden accept="image/webp, image/jpeg">
                         </div>
                     </div>
 

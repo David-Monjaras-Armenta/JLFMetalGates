@@ -102,7 +102,7 @@ if (!empty($search)) {
                 </div>
                 <div class="group">
                     <label for="image">Imagen:</label>
-                    <input type="file" id="image" name="image">
+                    <input type="file" id="image" name="image" accept="image/webp, image/jpeg">
                 </div>
 
                 <input type="submit" value="Enviar">
@@ -170,7 +170,7 @@ if (!empty($search)) {
                     <div class="group">
                         <label for="image<?php echo $enContent['id']; ?>">Imagen:</label>
                         <img src="<?= $domain ?>/panel/images/<?= $enContent['image'] ?>" onclick="toFocus('image_<?php echo $enContent['id']; ?>')">
-                        <input type="file" id="image_<?php echo $enContent['id']; ?>" name="image" hidden>
+                        <input type="file" id="image_<?php echo $enContent['id']; ?>" name="image" hidden accept="image/webp, image/jpeg">
                     </div>
 
                     <input type="submit" value="Enviar">
