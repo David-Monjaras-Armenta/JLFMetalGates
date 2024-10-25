@@ -16,8 +16,6 @@ class ContactController
 
     public function index()
     {
-        
-
         $data = [];
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (isset($_POST["id"])) {

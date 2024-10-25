@@ -12,13 +12,13 @@ $search = isset($_GET['s']) ? $_GET['s'] : '';
 $result = [];
 if (!empty($search)) {
     foreach ($data["section"]['es'] as $content) {
-        if (stripos($content['name'], $search) !== false || stripos($content['title'], $search) !== false || stripos($content['text'], $search) !== false) {
+        if (stripos($content['name'], $search) !== false || stripos($content['title'], $search) !== false) {
             $result["es"][] = $content;
         }
     }
 
     foreach ($data["section"]['en'] as $content) {
-        if (stripos($content['name'], $search) !== false || stripos($content['title'], $search) !== false || stripos($content['text'], $search) !== false) {
+        if (stripos($content['name'], $search) !== false || stripos($content['title'], $search) !== false) {
             $result["en"][] = $content;
         }
     }
@@ -42,7 +42,7 @@ if (!empty($search)) {
 <body>
     <?php include_once dirname(__DIR__, 1) . "/nav/navbar.php" ?>
     <div class="container" style="gap: 32px; overflow-y: auto;">
-        <h1 style="width: 100%; text-align: center;">Sección Inicio</h1>
+        <h1 style="width: 100%; text-align: center;">Sección Soluciones</h1>
         <div class="row">
             <form method="GET" class="search-bar">
                 <input type="text" name="s" id="s" value="<?= htmlspecialchars($search) ?>" placeholder="Buscar...">
@@ -71,34 +71,14 @@ if (!empty($search)) {
 
                 <div class="row">
                     <div class="column">
-                        <label for="text_en">
-                            Texto (Inglés):
-                        </label>
-                        <textarea id="text_en" name="text_en" rows=4 required></textarea>
-                    </div>
-                    <div class="column">
-                        <label for="text_es">
-                            Texto (Español):
-                        </label>
-                        <textarea id="text_es" name="text_es" rows=4 required></textarea>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="column">
-                        <label for="image_desk">Imagen Desktop:</label>
+                        <label for="image_before">Imagen Antes:</label>
                         <input type="text" value="Selecciona una imagen" readonly>
-                        <input type="file" id="image_desk" name="image_desk" hidden>
+                        <input type="file" id="image_before" name="image_desk" hidden>
                     </div>
                     <div class="column">
-                        <label for="image_tab">Imagen Tablet:</label>
+                        <label for="image_after">Imagen Después:</label>
                         <input type="text" value="Selecciona una imagen" readonly>
-                        <input type="file" id="image_tab" name="image_tab" hidden>
-                    </div>
-                    <div class="column">
-                        <label for="image_mov">Imagen Móvil:</label>
-                        <input type="text" value="Selecciona una imagen" readonly>
-                        <input type="file" id="image_mov" name="image_mov" hidden>
+                        <input type="file" id="image_after" name="image_tab" hidden>
                     </div>
                 </div>
 
@@ -139,34 +119,14 @@ if (!empty($search)) {
 
                     <div class="row">
                         <div class="column">
-                            <label for="text_en_<?php echo $enContent['id']; ?>">
-                                Texto (Inglés):
-                            </label>
-                            <textarea id="text_en_<?php echo $enContent['id']; ?>" name="text_en" rows=4 required><?php echo $enContent['text']; ?></textarea>
-                        </div>
-                        <div class="column">
-                            <label for="text_es_<?php echo $esContent['id']; ?>">
-                                Texto (Español):
-                            </label>
-                            <textarea id="text_es_<?php echo $esContent['id']; ?>" name="text_es" rows=4 required><?php echo $esContent['text']; ?></textarea>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="column">
-                            <label for="image_desk_<?php echo $enContent['id']; ?>">Imagen Desktop:</label>
+                            <label for="image_before_<?php echo $enContent['id']; ?>">Imagen Antes:</label>
                             <input type="text" value="<?php echo $images[0]; ?>" readonly>
-                            <input type="file" id="image_desk_<?php echo $enContent['id']; ?>" name="image_desk" hidden>
+                            <input type="file" id="image_before_<?php echo $enContent['id']; ?>" name="image_desk" hidden>
                         </div>
                         <div class="column">
-                            <label for="image_tab_<?php echo $enContent['id']; ?>">Imagen Tablet:</label>
+                            <label for="image_after_<?php echo $enContent['id']; ?>">Imagen Después:</label>
                             <input type="text" value="<?php echo $images[1]; ?>" readonly>
-                            <input type="file" id="image_tab_<?php echo $enContent['id']; ?>" name="image_tab" hidden>
-                        </div>
-                        <div class="column">
-                            <label for="image_mov_<?php echo $enContent['id']; ?>">Imagen Móvil:</label>
-                            <input type="text" value="<?php echo $images[2]; ?>" readonly>
-                            <input type="file" id="image_mov_<?php echo $enContent['id']; ?>" name="image_mov" hidden>
+                            <input type="file" id="image_after_<?php echo $enContent['id']; ?>" name="image_tab" hidden>
                         </div>
                     </div>
 

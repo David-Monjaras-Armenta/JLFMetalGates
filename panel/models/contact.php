@@ -92,7 +92,7 @@ class ContactModel
     {
         try {
             $conn = $this->db->get_connection();
-            $stmt = $conn->prepare("UPDATE tbl_contact SET b_status = 0 WHERE id = ?");
+            $stmt = $conn->prepare("UPDATE tbl_contact SET b_status = 0, d_modify_date = NOW() WHERE id = ?");
             $stmt->bind_param("i", $id);
 
             if ($stmt->execute()) {

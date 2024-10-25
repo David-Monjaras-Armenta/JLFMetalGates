@@ -57,7 +57,7 @@ class ContentModel
         $contents = [];
         try {
             $conn = $this->db->get_connection();
-            $stmt = $conn->prepare("SELECT * FROM cat_content WHERE id_section = ? AND id_language = ?");
+            $stmt = $conn->prepare("SELECT * FROM cat_content WHERE id_section = ? AND id_language = ? AND b_status = 1");
             $stmt->bind_param("ii", $section, $language);
 
             $stmt->execute();
@@ -100,8 +100,36 @@ class ContentModel
     {
         try {
             $conn = $this->db->get_connection();
-            $stmt = $conn->prepare("UPDATE cat_content SET v_name=?, v_title=?, v_text=?, v_image=? WHERE id = ?");
+            $stmt = $conn->prepare("UPDATE cat_content SET v_name=?, v_title=?, v_text=?, v_image=?, d_modify_date = NOW() WHERE id = ?");
             $stmt->bind_param("ssssi", $name, $title, $text, $image, $id);
+
+            if ($stmt->execute()) {
+                $stmt->close();
+                $conn->commit();
+                return true;
+            }
+            
+            $stmt->close();
+            $conn->rollback();
+            return false;
+        } catch (\Throwable $th) {
+            Logger::log(Logger::$ERROR, $th);
+            return false;
+        }
+    }
+
+    /**
+     * Elimina lógicamente el contenido especificado
+     * 
+     * @param int $id id del contenido
+     * @return boolean true en caso de que se elimine el contenido, false en caso contrario
+     */
+    public function delete($id)
+    {
+        try {
+            $conn = $this->db->get_connection();
+            $stmt = $conn->prepare("UPDATE cat_content SET b_status=0, d_modify_date = NOW() WHERE id = ?");
+            $stmt->bind_param("i", $id);
 
             if ($stmt->execute()) {
                 $stmt->close();
