@@ -6,6 +6,10 @@ if (isset($_GET['url'])) {
     $url = explode('/', filter_var(rtrim($_GET['url'], '/'), FILTER_SANITIZE_URL));
 }
 
+if (!isset($_COOKIE["auth_token"])) {
+    $url = ["home"];
+}
+
 # Se busca el controllador
 $controller = null;
 if (file_exists('./controllers/' . ucfirst($url[0]) . 'Controller.php')) {

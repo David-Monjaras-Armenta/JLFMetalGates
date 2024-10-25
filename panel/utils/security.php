@@ -21,4 +21,17 @@ class Security
         );
         $_SESSION['username'] = $username;
     }
+
+    public static function dropCookie()
+    {
+        setcookie(
+            'auth_token',
+            "",
+            time() + (86400 * 30),
+            '/',
+            '',
+            false, #cambiar a true cuando haya https
+            true
+        );
+    }
 }
