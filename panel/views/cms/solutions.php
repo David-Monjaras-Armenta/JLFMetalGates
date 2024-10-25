@@ -51,7 +51,7 @@ if (!empty($search)) {
             <button onclick="showCreate()"><i class="fa-solid fa-plus"></i></button>
         </div>
         <div id="create" class="card hidden">
-            <form action="" method="POST">
+            <form action="" method="POST" enctype="multipart/form-data">
                 <div class="group">
                     <label for="name">Nombre:</label>
                     <input type="text" id="name" name="name" required>
@@ -72,13 +72,11 @@ if (!empty($search)) {
                 <div class="row">
                     <div class="column">
                         <label for="image_before">Imagen Antes:</label>
-                        <input type="text" value="Selecciona una imagen" readonly>
-                        <input type="file" id="image_before" name="image_desk" hidden>
+                        <input type="file" id="image_before" name="image_before">
                     </div>
                     <div class="column">
                         <label for="image_after">Imagen Después:</label>
-                        <input type="text" value="Selecciona una imagen" readonly>
-                        <input type="file" id="image_after" name="image_tab" hidden>
+                        <input type="file" id="image_after" name="image_after">
                     </div>
                 </div>
 
@@ -93,10 +91,10 @@ if (!empty($search)) {
         for ($i = 0; $i < count($enItems); $i++) {
             $enContent = $enItems[$i];
             $esContent = $esItems[$i];
-            $images = explode(",", $enContent['image']);
+            $images = explode(", ", $enContent['image']);
         ?>
             <div class="card">
-                <form action="" method="POST">
+                <form action="" method="POST" enctype="multipart/form-data">
                     <input type="hidden" name="id_en" value="<?php echo $enContent['id']; ?>">
                     <input type="hidden" name="id_es" value="<?php echo $esContent['id']; ?>">
 
@@ -120,13 +118,13 @@ if (!empty($search)) {
                     <div class="row">
                         <div class="column">
                             <label for="image_before_<?php echo $enContent['id']; ?>">Imagen Antes:</label>
-                            <input type="text" value="<?php echo $images[0]; ?>" readonly>
-                            <input type="file" id="image_before_<?php echo $enContent['id']; ?>" name="image_desk" hidden>
+                            <img src="<?= $domain ?>/panel/images/<?= $images[0] ?>" onclick="toFocus('image_before_<?php echo $enContent['id']; ?>')">
+                            <input type="file" id="image_before_<?php echo $enContent['id']; ?>" name="image_before" hidden>
                         </div>
                         <div class="column">
                             <label for="image_after_<?php echo $enContent['id']; ?>">Imagen Después:</label>
-                            <input type="text" value="<?php echo $images[1]; ?>" readonly>
-                            <input type="file" id="image_after_<?php echo $enContent['id']; ?>" name="image_tab" hidden>
+                            <img src="<?= $domain ?>/panel/images/<?= $images[1] ?>" onclick="toFocus('image_after_<?php echo $enContent['id']; ?>')">
+                            <input type="file" id="image_after_<?php echo $enContent['id']; ?>" name="image_after" hidden>
                         </div>
                     </div>
 
@@ -154,6 +152,10 @@ if (!empty($search)) {
     <script>
         function showCreate() {
             document.getElementById("create").classList.remove("hidden")
+        }
+
+        function toFocus(id) {
+            document.getElementById(id).click();
         }
     </script>
 </body>

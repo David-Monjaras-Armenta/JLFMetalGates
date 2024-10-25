@@ -51,7 +51,7 @@ if (!empty($search)) {
             <button onclick="showCreate()"><i class="fa-solid fa-plus"></i></button>
         </div>
         <div id="create" class="card hidden">
-            <form action="" method="POST">
+            <form action="" method="POST" enctype="multipart/form-data">
                 <div class="group">
                     <label for="name">Nombre:</label>
                     <input type="text" id="name" name="name" required>
@@ -87,18 +87,15 @@ if (!empty($search)) {
                 <div class="row">
                     <div class="column">
                         <label for="image_desk">Imagen Desktop:</label>
-                        <input type="text" value="Selecciona una imagen" readonly>
-                        <input type="file" id="image_desk" name="image_desk" hidden>
+                        <input type="file" id="image_desk" name="image_desk" accept="image/webp, image/jpeg">
                     </div>
                     <div class="column">
                         <label for="image_tab">Imagen Tablet:</label>
-                        <input type="text" value="Selecciona una imagen" readonly>
-                        <input type="file" id="image_tab" name="image_tab" hidden>
+                        <input type="file" id="image_tab" name="image_tab" accept="image/webp, image/jpeg">
                     </div>
                     <div class="column">
                         <label for="image_mov">Imagen Móvil:</label>
-                        <input type="text" value="Selecciona una imagen" readonly>
-                        <input type="file" id="image_mov" name="image_mov" hidden>
+                        <input type="file" id="image_mov" name="image_mov" accept="image/webp, image/jpeg">
                     </div>
                 </div>
 
@@ -113,10 +110,10 @@ if (!empty($search)) {
         for ($i = 0; $i < count($enItems); $i++) {
             $enContent = $enItems[$i];
             $esContent = $esItems[$i];
-            $images = explode(",", $enContent['image']);
+            $images = explode(", ", $enContent['image']);
         ?>
             <div class="card">
-                <form action="" method="POST">
+                <form action="" method="POST" enctype="multipart/form-data">
                     <input type="hidden" name="id_en" value="<?php echo $enContent['id']; ?>">
                     <input type="hidden" name="id_es" value="<?php echo $esContent['id']; ?>">
 
@@ -155,18 +152,18 @@ if (!empty($search)) {
                     <div class="row">
                         <div class="column">
                             <label for="image_desk_<?php echo $enContent['id']; ?>">Imagen Desktop:</label>
-                            <input type="text" value="<?php echo $images[0]; ?>" readonly>
-                            <input type="file" id="image_desk_<?php echo $enContent['id']; ?>" name="image_desk" hidden>
+                            <img src="<?= $domain ?>/panel/images/<?= $images[0] ?>" onclick="toFocus('image_desk_<?php echo $enContent['id']; ?>')">
+                            <input type="file" id="image_desk_<?php echo $enContent['id']; ?>" name="image_desk" accept="image/webp, image/jpeg" value="" hidden>
                         </div>
                         <div class="column">
                             <label for="image_tab_<?php echo $enContent['id']; ?>">Imagen Tablet:</label>
-                            <input type="text" value="<?php echo $images[1]; ?>" readonly>
-                            <input type="file" id="image_tab_<?php echo $enContent['id']; ?>" name="image_tab" hidden>
+                            <img src="<?= $domain ?>/panel/images/<?= $images[1] ?>" onclick="toFocus('image_tab_<?php echo $enContent['id']; ?>')">
+                            <input type="file" id="image_tab_<?php echo $enContent['id']; ?>" name="image_tab" accept="image/webp, image/jpeg" hidden>
                         </div>
                         <div class="column">
                             <label for="image_mov_<?php echo $enContent['id']; ?>">Imagen Móvil:</label>
-                            <input type="text" value="<?php echo $images[2]; ?>" readonly>
-                            <input type="file" id="image_mov_<?php echo $enContent['id']; ?>" name="image_mov" hidden>
+                            <img src="<?= $domain ?>/panel/images/<?= $images[2] ?>" onclick="toFocus('image_mov_<?php echo $enContent['id']; ?>')">
+                            <input type="file" id="image_mov_<?php echo $enContent['id']; ?>" name="image_mov" accept="image/webp, image/jpeg" hidden>
                         </div>
                     </div>
 
@@ -194,6 +191,10 @@ if (!empty($search)) {
     <script>
         function showCreate() {
             document.getElementById("create").classList.remove("hidden")
+        }
+
+        function toFocus(id) {
+            document.getElementById(id).click();
         }
     </script>
 </body>

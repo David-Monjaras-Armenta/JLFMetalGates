@@ -60,7 +60,7 @@ if (!empty($search)) {
                 </select>
             </div>
 
-            <form id="form-text" action="" method="POST" style="display: none;">
+            <form id="form-text" action="" method="POST" style="display: none;" >
                 <div class="group">
                     <label for="name">Nombre:</label>
                     <input type="text" id="name" name="name" required>
@@ -95,15 +95,14 @@ if (!empty($search)) {
 
                 <input type="submit" value="Enviar">
             </form>
-            <form id="form-image" action="" method="POST" style="display: none;">
+            <form id="form-image" action="" method="POST" style="display: none;" enctype="multipart/form-data">
                 <div class="group">
                     <label for="name">Nombre:</label>
                     <input type="text" id="name" name="name" required>
                 </div>
                 <div class="group">
                     <label for="image">Imagen:</label>
-                    <input type="text" value="Selecciona una imagen" readonly>
-                    <input type="file" id="image" name="image" hidden>
+                    <input type="file" id="image" name="image">
                 </div>
 
                 <input type="submit" value="Enviar">
@@ -117,7 +116,6 @@ if (!empty($search)) {
         for ($i = 0; $i < count($enItems); $i++) {
             $enContent = $enItems[$i];
             $esContent = $esItems[$i];
-            $images = explode(",", $enContent['image']);
         ?>
             <div class="card">
                 <?php if ($enContent["title"] != ""): ?>
@@ -160,7 +158,7 @@ if (!empty($search)) {
                     <input type="submit" value="Enviar">
                 </form>
                 <?php else: ?>
-                <form action="" method="POST">
+                <form action="" method="POST" enctype="multipart/form-data">
                     <input type="hidden" name="id_en" value="<?php echo $enContent['id']; ?>">
                     <input type="hidden" name="id_es" value="<?php echo $esContent['id']; ?>">
 
@@ -171,8 +169,8 @@ if (!empty($search)) {
 
                     <div class="group">
                         <label for="image<?php echo $enContent['id']; ?>">Imagen:</label>
-                        <input type="text" value="<?php echo $images[0]; ?>" readonly>
-                        <input type="file" id="image<?php echo $enContent['id']; ?>" name="image" hidden>
+                        <img src="<?= $domain ?>/panel/images/<?= $enContent['image'] ?>" onclick="toFocus('image_<?php echo $enContent['id']; ?>')">
+                        <input type="file" id="image_<?php echo $enContent['id']; ?>" name="image" hidden>
                     </div>
 
                     <input type="submit" value="Enviar">
@@ -218,6 +216,10 @@ if (!empty($search)) {
                 default:
                     break;
             }
+        }
+
+        function toFocus(id) {
+            document.getElementById(id).click();
         }
     </script>
 </body>

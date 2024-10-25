@@ -2,6 +2,7 @@
 
 include_once dirname(__DIR__, 1) . "/utils/render.php";
 include_once dirname(__DIR__, 1) . "/utils/logs.php";
+include_once dirname(__DIR__, 1) . "/utils/image.php";
 include_once dirname(__DIR__, 1) . "/utils/security.php";
 include_once dirname(__DIR__, 1) . "/models/section.php";
 include_once dirname(__DIR__, 1) . "/models/content.php";
@@ -22,6 +23,16 @@ class CmsController
         $data = [];
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (isset($_POST["id_en"])) {
+                if ($_FILES["image_desk"]["size"] > 0) {
+                    ImageHandler::upload($_FILES["image_desk"], "pictures/home", "desktop");
+                }
+                if ($_FILES["image_tab"]["size"] > 0) {
+                    ImageHandler::upload($_FILES["image_tab"], "pictures/home", "tablet");
+                }
+                if ($_FILES["image_mov"]["size"] > 0) {
+                    ImageHandler::upload($_FILES["image_mov"], "pictures/home", "movile");
+                }
+
                 $en = [
                     "id" => intval($_POST["id_en"]),
                     "name" => $_POST["name_en"],
@@ -36,9 +47,9 @@ class CmsController
                     "text" => $_POST["text_es"],
                 ];
 
-                $result_en = $this->contentModel->update($en["id"], $en["name"], $en["title"], $en["text"], "pictures/home/img_desktop1.webp, pictures/home/img_tablet1.webp, pictures/home/img_mobile1.webp");
+                $result_en = $this->contentModel->update($en["id"], $en["name"], $en["title"], $en["text"], "pictures/home/desktop.jpg, pictures/home/tablet.jpg, pictures/home/movile.jpg");
 
-                $result_es = $this->contentModel->update($es["id"], $es["name"], $es["title"], $es["text"], "pictures/home/img_desktop1.webp, pictures/home/img_tablet1.webp, pictures/home/img_mobile1.webp");
+                $result_es = $this->contentModel->update($es["id"], $es["name"], $es["title"], $es["text"], "pictures/home/desktop.jpg, pictures/home/tablet.jpg, pictures/home/movile.jpg");
 
                 if ($result_en && $result_es) {
                     $data["notify"] = [
@@ -52,27 +63,38 @@ class CmsController
                     ];
                 }
             } else {
-                $en = [
-                    "name" => $_POST["name"],
-                    "title" => $_POST["title_en"],
-                    "text" => $_POST["text_en"],
-                ];
+                if (isset($_FILES["image_desk"]) && isset($_FILES["image_tab"]) && isset($_FILES["image_mov"])) {
+                    $image_desk = ImageHandler::upload($_FILES["image_desk"], "pictures/home", "desktop");
+                    $image_tab = ImageHandler::upload($_FILES["image_tab"], "pictures/home", "tablet");
+                    $image_mov = ImageHandler::upload($_FILES["image_mov"], "pictures/home", "movile");
 
-                $es = [
-                    "name" => $_POST["name"],
-                    "title" => $_POST["title_es"],
-                    "text" => $_POST["text_es"],
-                ];
-
-                $result_en = $this->contentModel->create($en["name"], $en["title"], $en["text"], "pictures/home/img_desktop1.webp, pictures/home/img_tablet1.webp, pictures/home/img_mobile1.webp", 2, 2);
-
-                $result_es = $this->contentModel->create($es["name"], $es["title"], $es["text"], "pictures/home/img_desktop1.webp, pictures/home/img_tablet1.webp, pictures/home/img_mobile1.webp", 2, 1);
-
-                if ($result_en && $result_es) {
-                    $data["notify"] = [
-                        "type" => "success",
-                        "message" => "Elemento creado"
+                    $en = [
+                        "name" => $_POST["name"],
+                        "title" => $_POST["title_en"],
+                        "text" => $_POST["text_en"],
                     ];
+
+                    $es = [
+                        "name" => $_POST["name"],
+                        "title" => $_POST["title_es"],
+                        "text" => $_POST["text_es"],
+                    ];
+
+                    $result_en = $this->contentModel->create($en["name"], $en["title"], $en["text"], "{$image_desk}, {$image_tab}, {$image_mov}", 2, 2);
+
+                    $result_es = $this->contentModel->create($es["name"], $es["title"], $es["text"], "{$image_desk}, {$image_tab}, {$image_mov}", 2, 1);
+
+                    if ($result_en && $result_es) {
+                        $data["notify"] = [
+                            "type" => "success",
+                            "message" => "Elemento creado"
+                        ];
+                    } else {
+                        $data["notify"] = [
+                            "type" => "error",
+                            "message" => "Error al crear el elemento"
+                        ];
+                    }
                 } else {
                     $data["notify"] = [
                         "type" => "error",
@@ -92,6 +114,13 @@ class CmsController
         $data = [];
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (isset($_POST['id_en'])) {
+                if ($_FILES["image_before"]["size"] > 0) {
+                    $image_before = ImageHandler::upload($_FILES["image_before"], "pictures/solutions/{$_POST['name_en']}", "before");
+                }
+                if ($_FILES["image_after"]["size"] > 0) {
+                    $image_after = ImageHandler::upload($_FILES["image_after"], "pictures/solutions/{$_POST['name_en']}", "after");
+                }
+
                 $en = [
                     "id" => intval($_POST["id_en"]),
                     "name" => $_POST["name_en"],
@@ -104,9 +133,9 @@ class CmsController
                     "title" => $_POST["title_es"],
                 ];
 
-                $result_en = $this->contentModel->update($en["id"], $en["name"], $en["title"], "", "pictures/solutions/img_before2.webp, pictures/solutions/img_after2.webp");
+                $result_en = $this->contentModel->update($en["id"], $en["name"], $en["title"], "", "{$image_before}, {$image_after}");
 
-                $result_es = $this->contentModel->update($es["id"], $es["name"], $es["title"], "", "pictures/solutions/img_before2.webp, pictures/solutions/img_after2.webp");
+                $result_es = $this->contentModel->update($es["id"], $es["name"], $es["title"], "", "{$image_before}, {$image_after}");
 
                 if ($result_en && $result_es) {
                     $data["notify"] = [
@@ -120,25 +149,35 @@ class CmsController
                     ];
                 }
             } else {
-                $en = [
-                    "name" => $_POST["name"],
-                    "title" => $_POST["title_en"],
-                ];
+                if (isset($_FILES["image_after"]) && isset($_FILES["image_before"])) {
+                    $image_before = ImageHandler::upload($_FILES["image_before"], "pictures/solutions/{$_POST['name']}", "before");
+                    $image_after = ImageHandler::upload($_FILES["image_after"], "pictures/solutions/{$_POST['name']}", "after");
 
-                $es = [
-                    "name" => $_POST["name"],
-                    "title" => $_POST["title_es"],
-                ];
-
-                $result_en = $this->contentModel->create($en["name"], $en["title"], "", "pictures/solutions/img_before2.webp, pictures/solutions/img_after2.webp", 3, 2);
-
-                $result_es = $this->contentModel->create($es["name"], $es["title"], "", "pictures/solutions/img_before2.webp, pictures/solutions/img_after2.webp", 3, 1);
-
-                if ($result_en && $result_es) {
-                    $data["notify"] = [
-                        "type" => "success",
-                        "message" => "Elemento creado"
+                    $en = [
+                        "name" => $_POST["name"],
+                        "title" => $_POST["title_en"],
                     ];
+
+                    $es = [
+                        "name" => $_POST["name"],
+                        "title" => $_POST["title_es"],
+                    ];
+
+                    $result_en = $this->contentModel->create($en["name"], $en["title"], "", "{$image_before}, {$image_after}", 3, 2);
+
+                    $result_es = $this->contentModel->create($es["name"], $es["title"], "", "{$image_before}, {$image_after}", 3, 1);
+
+                    if ($result_en && $result_es) {
+                        $data["notify"] = [
+                            "type" => "success",
+                            "message" => "Elemento creado"
+                        ];
+                    } else {
+                        $data["notify"] = [
+                            "type" => "error",
+                            "message" => "Error al crear el elemento"
+                        ];
+                    }
                 } else {
                     $data["notify"] = [
                         "type" => "error",
@@ -158,6 +197,10 @@ class CmsController
         $data = [];
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (isset($_POST['id_en'])) {
+                if ($_FILES["image"]["size"] > 0) {
+                    $image = ImageHandler::upload($_FILES["image"], "pictures/about", "icon_{$_POST['name_en']}");
+                }
+
                 $en = [
                     "id" => intval($_POST["id_en"]),
                     "name" => $_POST["name_en"],
@@ -172,9 +215,9 @@ class CmsController
                     "text" => $_POST["text_es"],
                 ];
 
-                $result_en = $this->contentModel->update($en["id"], $en["name"], $en["title"], $en["text"], "pictures/about/icon3.webp");
+                $result_en = $this->contentModel->update($en["id"], $en["name"], $en["title"], $en["text"], $image);
 
-                $result_es = $this->contentModel->update($es["id"], $es["name"], $es["title"], $es["text"], "pictures/about/icon3.webp");
+                $result_es = $this->contentModel->update($es["id"], $es["name"], $es["title"], $es["text"], $image);
 
                 if ($result_en && $result_es) {
                     $data["notify"] = [
@@ -188,27 +231,36 @@ class CmsController
                     ];
                 }
             } else {
-                $en = [
-                    "name" => $_POST["name"],
-                    "title" => $_POST["title_en"],
-                    "text" => $_POST["text_en"],
-                ];
+                if ($_FILES["image"]["size"] > 0) {
+                    $image = ImageHandler::upload($_FILES["image"], "pictures/about", "icon_{$_POST['name']}");
 
-                $es = [
-                    "name" => $_POST["name"],
-                    "title" => $_POST["title_es"],
-                    "text" => $_POST["text_en"],
-                ];
-
-                $result_en = $this->contentModel->create($en["name"], $en["title"], $en["text"], "pictures/about/icon3.webp", 4, 2);
-
-                $result_es = $this->contentModel->create($es["name"], $es["title"], $es["text"], "pictures/about/icon3.webp", 4, 1);
-
-                if ($result_en && $result_es) {
-                    $data["notify"] = [
-                        "type" => "success",
-                        "message" => "Elemento creado"
+                    $en = [
+                        "name" => $_POST["name"],
+                        "title" => $_POST["title_en"],
+                        "text" => $_POST["text_en"],
                     ];
+
+                    $es = [
+                        "name" => $_POST["name"],
+                        "title" => $_POST["title_es"],
+                        "text" => $_POST["text_en"],
+                    ];
+
+                    $result_en = $this->contentModel->create($en["name"], $en["title"], $en["text"], $image, 4, 2);
+
+                    $result_es = $this->contentModel->create($es["name"], $es["title"], $es["text"], $image, 4, 1);
+
+                    if ($result_en && $result_es) {
+                        $data["notify"] = [
+                            "type" => "success",
+                            "message" => "Elemento creado"
+                        ];
+                    } else {
+                        $data["notify"] = [
+                            "type" => "error",
+                            "message" => "Error al crear el elemento"
+                        ];
+                    }
                 } else {
                     $data["notify"] = [
                         "type" => "error",
@@ -235,31 +287,35 @@ class CmsController
                         "title" => $_POST["title_en"],
                         "text" => $_POST["text_en"],
                     ];
-    
+
                     $es = [
                         "id" => intval($_POST['id_es']),
                         "name" => $_POST["name_en"],
                         "title" => $_POST["title_es"],
                         "text" => $_POST["text_en"],
                     ];
-    
+
                     $result_en = $this->contentModel->update($en["id"], $en["name"], $en["title"], $en["text"], "");
-    
+
                     $result_es = $this->contentModel->update($es["id"], $es["name"], $es["title"], $es["text"], "");
                 } else {
+                    if ($_FILES["image"]["size"] > 0) {
+                        $image = ImageHandler::upload($_FILES["image"], "pictures/gallery", "image_{$_POST['name_en']}");
+                    }
+
                     $en = [
                         "id" => intval($_POST["id_en"]),
                         "name" => $_POST["name_en"],
                     ];
-    
+
                     $es = [
                         "id" => intval($_POST["id_es"]),
                         "name" => $_POST["name_en"],
                     ];
-    
-                    $result_en = $this->contentModel->update($en['id'], $en["name"], "", "", "pictures/gallery/image2.webp");
-    
-                    $result_es = $this->contentModel->update($es['id'], $es["name"], "", "", "pictures/about/pictures/gallery/image2.webp");
+
+                    $result_en = $this->contentModel->update($en['id'], $en["name"], "", "", $image);
+
+                    $result_es = $this->contentModel->update($es['id'], $es["name"], "", "", $image);
                 }
 
                 if ($result_en && $result_es) {
@@ -280,40 +336,49 @@ class CmsController
                         "title" => $_POST["title_en"],
                         "text" => $_POST["text_en"],
                     ];
-    
+
                     $es = [
                         "name" => $_POST["name"],
                         "title" => $_POST["title_es"],
                         "text" => $_POST["text_en"],
                     ];
-    
+
                     $result_en = $this->contentModel->create($en["name"], $en["title"], $en["text"], "", 5, 2);
-    
+
                     $result_es = $this->contentModel->create($es["name"], $es["title"], $es["text"], "", 5, 1);
                 } else {
-                    $en = [
-                        "name" => $_POST["name"],
-                    ];
-    
-                    $es = [
-                        "name" => $_POST["name"],
-                    ];
-    
-                    $result_en = $this->contentModel->create($en["name"], "", "", "pictures/gallery/image.webp", 5, 2);
-    
-                    $result_es = $this->contentModel->create($es["name"], "", "", "pictures/about/pictures/gallery/image.webp", 5, 1);
-                }
+                    if ($_FILES["image"]["size"] > 0) {
+                        $image = ImageHandler::upload($_FILES["image"], "pictures/gallery", "image_{$_POST['name']}");
 
-                if ($result_en && $result_es) {
-                    $data["notify"] = [
-                        "type" => "success",
-                        "message" => "Elemento creado"
-                    ];
-                } else {
-                    $data["notify"] = [
-                        "type" => "error",
-                        "message" => "Error al crear el elemento"
-                    ];
+                        $en = [
+                            "name" => $_POST["name"],
+                        ];
+
+                        $es = [
+                            "name" => $_POST["name"],
+                        ];
+
+                        $result_en = $this->contentModel->create($en["name"], "", "", $image, 5, 2);
+
+                        $result_es = $this->contentModel->create($es["name"], "", "", $image, 5, 1);
+
+                        if ($result_en && $result_es) {
+                            $data["notify"] = [
+                                "type" => "success",
+                                "message" => "Elemento creado"
+                            ];
+                        } else {
+                            $data["notify"] = [
+                                "type" => "error",
+                                "message" => "Error al crear el elemento"
+                            ];
+                        }
+                    } else {
+                        $data["notify"] = [
+                            "type" => "error",
+                            "message" => "Error al crear el elemento"
+                        ];
+                    }
                 }
             }
         }
