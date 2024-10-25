@@ -24,13 +24,13 @@ class CmsController
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (isset($_POST["id_en"])) {
                 if ($_FILES["image_desk"]["size"] > 0) {
-                    ImageHandler::upload($_FILES["image_desk"], "pictures/home", "desktop");
+                    ImageHandler::upload($_FILES["image_desk"], "pictures/home/{$_POST['name_en']}", "desktop");
                 }
                 if ($_FILES["image_tab"]["size"] > 0) {
-                    ImageHandler::upload($_FILES["image_tab"], "pictures/home", "tablet");
+                    ImageHandler::upload($_FILES["image_tab"], "pictures/home/{$_POST['name_en']}", "tablet");
                 }
                 if ($_FILES["image_mov"]["size"] > 0) {
-                    ImageHandler::upload($_FILES["image_mov"], "pictures/home", "movile");
+                    ImageHandler::upload($_FILES["image_mov"], "pictures/home/{$_POST['name_en']}", "movile");
                 }
 
                 $en = [
@@ -64,9 +64,9 @@ class CmsController
                 }
             } else {
                 if (isset($_FILES["image_desk"]) && isset($_FILES["image_tab"]) && isset($_FILES["image_mov"])) {
-                    $image_desk = ImageHandler::upload($_FILES["image_desk"], "pictures/home", "desktop");
-                    $image_tab = ImageHandler::upload($_FILES["image_tab"], "pictures/home", "tablet");
-                    $image_mov = ImageHandler::upload($_FILES["image_mov"], "pictures/home", "movile");
+                    $image_desk = ImageHandler::upload($_FILES["image_desk"], "pictures/home/{$_POST['name']}", "desktop");
+                    $image_tab = ImageHandler::upload($_FILES["image_tab"], "pictures/home/{$_POST['name']}", "tablet");
+                    $image_mov = ImageHandler::upload($_FILES["image_mov"], "pictures/home/{$_POST['name']}", "movile");
 
                     $en = [
                         "name" => $_POST["name"],

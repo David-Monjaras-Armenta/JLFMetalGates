@@ -19,7 +19,7 @@ class ImageHandler
 
         $check = getimagesize($image['tmp_name']);
 
-        if ($check !== false) {
+        if ($check !== false || $ext == "svg") {
             // Mover el archivo a la carpeta de destino
             if (move_uploaded_file($image['tmp_name'], $file_name)) {
                 return $path . "/" . $name;

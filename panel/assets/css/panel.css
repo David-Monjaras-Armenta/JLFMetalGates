@@ -510,6 +510,7 @@ td {
     width: 100%;
     object-fit: cover;
     cursor: pointer;
+    background-color: var(--neutral-70);
 }
 
 .card .group > img{
@@ -517,6 +518,7 @@ td {
     width: 100%;
     object-fit: scale-down;
     cursor: pointer;
+    background-color: var(--neutral-70);
 }
 
 textarea {
