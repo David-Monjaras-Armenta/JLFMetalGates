@@ -91,7 +91,6 @@ if (!empty($search)) {
         for ($i = 0; $i < count($enItems); $i++) {
             $enContent = $enItems[$i];
             $esContent = $esItems[$i];
-            $images = explode(", ", $enContent['image']);
         ?>
             <div class="card">
                 <form action="" method="POST" enctype="multipart/form-data">
@@ -118,12 +117,12 @@ if (!empty($search)) {
                     <div class="row">
                         <div class="column">
                             <label for="image_before_<?php echo $enContent['id']; ?>">Imagen Antes:</label>
-                            <img src="<?= $domain ?>/panel/images/<?= $images[0] ?>" onclick="toFocus('image_before_<?php echo $enContent['id']; ?>')">
+                            <img src="<?= $enContent['image'][0] ?>" onclick="toFocus('image_before_<?php echo $enContent['id']; ?>')">
                             <input type="file" id="image_before_<?php echo $enContent['id']; ?>" name="image_before" hidden>
                         </div>
                         <div class="column">
                             <label for="image_after_<?php echo $enContent['id']; ?>">Imagen Después:</label>
-                            <img src="<?= $domain ?>/panel/images/<?= $images[1] ?>" onclick="toFocus('image_after_<?php echo $enContent['id']; ?>')">
+                            <img src="<?= $enContent['image'][1] ?>" onclick="toFocus('image_after_<?php echo $enContent['id']; ?>')">
                             <input type="file" id="image_after_<?php echo $enContent['id']; ?>" name="image_after" hidden accept="image/webp, image/jpeg">
                         </div>
                     </div>

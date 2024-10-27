@@ -2,7 +2,7 @@
 
 include_once dirname(__DIR__, 1) . "/config/db.php";
 include_once dirname(__DIR__, 1) . '/utils/logs.php';
-
+include_once dirname(__DIR__, 1) . '/utils/image.php';
 class ContentModel
 {
     private $db = null;
@@ -70,7 +70,7 @@ class ContentModel
                         "name" => strval($row["v_name"]),
                         "title" => strval($row["v_title"]),
                         "text" => strval($row["v_text"]),
-                        "image" => strval($row["v_image"]),
+                        "image" => ImageHandler::build_image_route(strval($row["v_image"])),
                         "language" => intval($row["id_language"]),
                     ];
                     array_push($contents, $content);

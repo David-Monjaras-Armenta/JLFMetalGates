@@ -35,7 +35,7 @@ class SectionModel
                     $section = [
                         "id" => intval($row["id"]),
                         "name" => strval($row["v_name"]),
-                        "email" => strval($row["v_background"]),
+                        "background" => ImageHandler::build_image_route(strval($row["v_background"])),
                         "status" => boolval($row["b_status"]),
                         "en" => $this->contentModel->read(2, intval($row["id"])),
                         "es" => $this->contentModel->read(1, intval($row["id"])),
@@ -74,7 +74,7 @@ class SectionModel
                     $section = [
                         "id" => intval($row["id"]),
                         "name" => strval($row["v_name"]),
-                        "email" => strval($row["v_background"]),
+                        "background" => ImageHandler::build_image_route(strval($row["v_background"])),
                         "status" => boolval($row["b_status"]),
                         "en" => $this->contentModel->read(2, intval($row["id"])),
                         "es" => $this->contentModel->read(1, intval($row["id"])),
