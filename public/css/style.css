@@ -138,7 +138,7 @@ nav.scrolled {
 .menu > .link > a {
     text-decoration: none;
     color: #fff;
-    font-size: 16px;
+    font-size: 14px;
     padding: 10px;
     border-radius: 8px;
 }
@@ -152,25 +152,6 @@ nav.scrolled {
 nav > .brand > h1 {
     font-size: 32px;
     margin: 0;
-}
-
-.language > button {
-    width: 40px;
-    height: 40px;
-    background-color: transparent;
-    border: none;
-    cursor: pointer;
-    display: flex;
-    flex-flow: row nowrap;
-    gap: 8px;
-    color: #fff;
-    align-items: center;
-}
-
-.language > button > img {
-    width: 25px;
-    height: 25px;
-    border-radius: 50%;
 }
 
 nav > .expand {
@@ -330,12 +311,21 @@ nav > .collapse {
     display: flex;
     flex-flow: column nowrap;
     align-items: center;
-    background-color: rgba(0, 0, 0, 0.2);
-    backdrop-filter: blur(3px);
-    padding: 32px 0;
+    padding: 0;
 }
 
-.section h2 {
+.section-content {
+    position: relative;
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(3px) grayscale(100%);
+    padding: 32px 0;
+    width: 100%;
+}
+
+.section-content h2 {
     margin-bottom: 24px;
     font-size: 48px;
     flex: 0 0 auto;
@@ -637,7 +627,7 @@ nav > .collapse {
     text-align: justify;
 }
 
-.slide-main button {
+.slide-main a {
     padding: 12px;
     background-color: var(--primary);
     border: 2px solid var(--primary);
@@ -647,6 +637,7 @@ nav > .collapse {
     font-weight: 700;
     max-width: 150px;
     cursor: pointer;
+    text-decoration: none;
 }
 
 .slides-carusel {
@@ -665,21 +656,19 @@ nav > .collapse {
 }
 
 .slides-carusel img {
-    width: 100%;
-    height: 100%;
     object-fit: cover;
     border-radius: 12px;
     cursor: pointer;
     width: 180px;
     height: 240px;
-    border-radius: 12px;
     box-shadow: 0 0px 8px 0 rgba( 255, 255, 255, 0.37 );
-    order: 1;
+    border-radius: 12px;
     transition: all 0.5s ease-out;
 }
 
 .slides-carusel img.active {
-    animation: shrinkAndDisappear 2s forwards;
+    width: 0;
+    box-shadow: none;
 }
 
 .slides-controls button {
@@ -693,20 +682,410 @@ nav > .collapse {
     cursor: pointer;
 }
 
-@keyframes shrinkAndDisappear {
-    0% {
-        transform: scale(1);
-        opacity: 1;
-    }
-    75% {
-        transform: scale(0);
-        opacity: 0;
-    }
-    100% {
-        transform: scale(1);
-        opacity: 1;
-        order: 2;
-    }
+footer {
+    display: flex;
+    flex-flow: column nowrap;
+    gap: 24px;
+    padding: 24px 48px;
+    background-color: var(--neutral-10);
+}
+
+footer .info {
+    display: flex;
+    flex-flow: row nowrap;
+    width: 100%;
+    gap: 24px;
+    justify-content: space-between;
+    align-items: start;
+}
+
+footer .rights {
+    display: flex;
+    flex-flow: column nowrap;
+    width: 100%;
+}
+
+footer .rights h6 {
+    text-align: center;
+    margin: 0;
+}
+
+footer .brand {
+    flex: 1;
+    padding-right: 48px;
+}
+
+footer .brand h2{
+    text-align: end;
+    margin: 0;
+}
+
+footer .contact {
+    flex: 0.5;
+    display: flex;
+    flex-flow: column nowrap;
+    gap: 12px;
+    align-items: flex-start;
+}
+
+footer .contact h6 {
+    color: var(--primary);
+    margin: 0;
+    font-size: 18px;
+}
+
+footer .contact .list {
+    display: flex;
+    flex-flow: column nowrap;
+    gap: 12px;
+    width: 100%;
+}
+
+footer .contact .list p {
+    font-size: 14px;
+    font-weight: 700;
+    color: #FFF;
+}
+
+footer .social-media {
+    flex: 0.5;
+    display: flex;
+    flex-flow: column nowrap;
+    gap: 12px;
+    align-items: flex-start;
+    justify-content: center;
+}
+
+footer .social-media h6 {
+    color: var(--primary);
+    margin: 0;
+    font-size: 18px;
+}
+
+footer .social-media .links {
+    display: flex;
+    flex-flow: row nowrap;
+    gap: 12px;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
+footer .social-media .links a {
+    text-decoration: none;
+    color: #FFF;
+    font-size: 24px;
+}
+
+.section.contact {
+    height: 720px;
+}
+
+.section.contact .section-content {
+    height: 100%;
+}
+
+.contact-info {
+    position: absolute;
+    top: 21%;
+    left: 5%;
+    z-index: 2;
+    display: flex;
+    flex-flow: column nowrap;
+    width: 320px;
+    height: 420px;
+    gap: 24px;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(136, 45, 23, 0.7);
+    backdrop-filter: blur(5px);
+    border-radius: 12px;
+}
+
+.contact-info h2 {
+    font-size: 20px;
+    margin: 0;
+}
+
+.contact-info .item {
+    display: flex;
+    flex-flow: row nowrap;
+    gap: 12px;
+    width: 100%;
+    padding: 0 24px;
+    align-items: center;
+}
+
+.contact-info .item p {
+    font-size: 14px;
+    font-weight: 400;
+    color: #FFF;
+    flex: 1;
+    text-align: start;
+}
+
+.contact-info .item img {
+    width: 25px;
+    height: 25px;
+    object-fit: scale-down;
+}
+
+.contact-form {
+    position: absolute;
+    top: 10%;
+    right: 0;
+    z-index: 1;
+    background-color: rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(5px);
+    width: 80%;
+    height: 80%;
+    border-top-left-radius: 12px;
+    border-bottom-left-radius: 12px;
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: flex-end;
+    border: 1px solid rgba(255,255, 255, 0.2);
+}
+
+.contact-form .form {
+    display: flex;
+    flex-flow: column nowrap;
+    flex: 0;
+    width: 60%;
+    padding: 24px;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    gap: 20px;
+}
+
+.contact-form .form .flotating-input{
+    border: none;
+    border-radius: 21px;
+    padding: 12px 24px;
+    background-color: rgba( 255, 255, 255, 0.15);
+    box-shadow: 5px 5px 8px 0 rgba(0, 0, 0, 0.25);
+    width: 100%;
+    position: relative;
+    cursor: text;
+}
+
+.flotating-input label {
+    position: absolute;
+    top: 12px;
+    left: 24px;
+    cursor: text;
+    transition: transform 0.5s ease;
+}
+
+.flotating-input.focus label {
+    transform: translate(-24px, -16px) scale(0.5);
+}
+
+.flotating-input input {
+    padding: 0;
+    font-size: 16px;
+    color: #FFF;
+    width: 100%;
+    background-color: transparent;
+    border: none;
+}
+
+.flotating-input textarea {
+    resize: none;
+    font-size: 16px;
+    color: #FFF;
+    border: none;
+    background-color: transparent;
+}
+
+.contact-form .form input, textarea:focus {
+    outline: none;
+}
+
+.contact-form .form input[type="checkbox"] {
+    cursor: pointer;
+}
+
+.contact-form .form button {
+    width: 150px;
+    font-size: 16px;
+    font-weight: 700;
+    color: #FFF;
+    background-color: var(--primary);
+    border-radius: 21px;
+    padding: 6px 12px;
+    text-align: center;
+    border: 2px solid var(--primary);
+    cursor: pointer;
+}
+
+.checkbox {
+    display: flex;
+    flex-flow: row nowrap;
+    gap: 4px;
+    align-items: center;
+}
+
+.checkbox label {
+    font-size: 12px;
+    font-weight: 600;
+    color: #FFF;
+}
+
+.checkbox label a {
+    color: var(--primary);
+    text-decoration: underline;
+}
+
+.contact-info-collapse {
+    position: absolute;
+    top: 5%;
+    left: 5%;
+    z-index: 1;
+    display: none;
+    flex-flow: column nowrap;
+    width: 90%;
+    height: 60px;
+    gap: 24px;
+    align-items: center;
+    justify-content: flex-start;
+    background-color: rgba(136, 45, 23, 0.7);
+    backdrop-filter: blur(5px);
+    border-radius: 12px;
+    overflow: hidden;
+    transition: all 0.5s ease;
+}
+
+.contact-info-collapse.show {
+    height: 240px;
+    z-index: 3;
+}
+
+.collapse-info-button {
+    display: flex;
+    flex-flow: row nowrap;
+    cursor: pointer;
+    gap: 8px;
+    padding: 0 32px;
+    padding-top: 16px;
+    width: 100%;
+    font-size: 20px;
+    color: #FFF;
+}
+
+.collapse-info-button i {
+    transition: transform 0.5s ease;
+}
+
+.contact-info-collapse.show .collapse-info-button i {
+    transform: rotate(180deg);
+}
+
+.contact-info-collapse h2 {
+    font-size: 18px !important;
+    margin: 0;
+    flex: 1;
+}
+
+.contact-info-collapse .item {
+    display: flex;
+    flex-flow: row nowrap;
+    gap: 12px;
+    width: 100%;
+    padding: 0 24px;
+    align-items: center;
+}
+
+.contact-info-collapse .item p {
+    font-size: 14px;
+    font-weight: 400;
+    color: #FFF;
+    flex: 1;
+    text-align: start;
+}
+
+.contact-info-collapse .item img {
+    width: 25px;
+    height: 25px;
+    object-fit: scale-down;
+}
+
+.collapse-info {
+    display: flex;
+    flex-flow: column nowrap;
+    gap: 16px;
+    width: 100%;
+    height: 100%;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-button {
+    width: 40px;
+    height: 40px;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    flex-flow: row nowrap;
+    gap: 8px;
+    color: #fff;
+    align-items: center;
+}
+
+.dropdown-button > img {
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    right: 16px;
+    background-color: var(--neutral-30);
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+}
+
+.dropdown-content form {
+    color: black;
+    display: block;
+}
+
+.dropdown-content form:hover {
+    background-color: var(--neutral-20);
+}
+
+.dropdown-content form button {
+    background-color: transparent;
+    color: #FFF;
+    padding: 0;
+    border: none;
+    display: flex;
+    flex-flow: row nowrap;
+    gap: 4px;
+    align-items: center;
+    cursor: pointer;
+    padding: 12px 16px;
+    width: 100%;
+}
+
+.dropdown-content form button img {
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.dropdown-content.show {
+    display: block;
 }
 
 @media (max-width: 640px) {
@@ -834,5 +1213,49 @@ nav > .collapse {
     .slides-carusel img {
         width: 90px;
         height: 180px;
+    }
+
+    footer .info {
+        flex-flow: column nowrap;
+    }
+
+    footer .brand {
+        width: 100%;
+        padding: 0;
+    }
+
+    footer .brand h2 {
+        text-align: center;
+    }
+
+    footer .contact {
+        width: 100%;
+        align-items: center;
+    }
+
+    footer .social-media {
+        width: 100%;
+        align-items: center;
+    }
+
+    .contact-info-collapse {
+        display: flex;
+    }
+
+    .contact-info {
+        display: none;
+        z-index: 2;
+    }
+
+    .contact-form {
+        border-radius: 12px;
+        width: 95%;
+        left: 2.5%;
+        justify-content: flex-end;
+    }
+
+    .contact-form .form {
+        gap: 10px;
+        width: 100%;
     }
 }

@@ -1,7 +1,24 @@
 <?php
-$lan = "en";
-if (isset($_COOKIE['lan'])) {
-    $lan = $_COOKIE['lan'];
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    if (isset($_POST['lan'])) {
+        session_start();
+        setcookie(
+            'lan',
+            $_POST['lan'],
+            time() + (86400 * 30),
+            '/',
+            '',
+            false, #cambiar a true cuando haya https
+            true
+        );
+        $_SESSION['username'] = "guest";
+        header("Location: /#home");
+    }
+} else {
+    $lan = "en";
+    if (isset($_COOKIE['lan'])) {
+        $lan = $_COOKIE['lan'];
+    }
 }
 ?>
 
@@ -30,7 +47,9 @@ if (isset($_COOKIE['lan'])) {
         include_once "./views/contact.php";
         ?>
     </main>
-
+    <?php
+    include_once "./views/footer.php"
+    ?>
     <script>
     </script>
 </body>

@@ -36,9 +36,9 @@ $slides = $content[$lan];
                     <p><?= $slide['text'] ?></p>
 
                     <?php if ($lan == "en"): ?>
-                        <button>Contact Us</button>
+                        <a href="#contact">Contact Us</a>
                     <?php else: ?>
-                        <button>Contáctanos</button>
+                        <a href="#contact">Contáctanos</a>
                     <?php endif; ?>
                 </div>
             <?php endforeach; ?>

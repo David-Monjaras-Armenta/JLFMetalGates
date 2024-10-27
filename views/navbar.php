@@ -2,6 +2,8 @@
 include_once "./panel/cms.php";
 $content = CMS::get_content(1);
 
+var_dump($_COOKIE["lan"]);
+
 $lan = "en";
 if (isset($_COOKIE['lan'])) {
     $lan = $_COOKIE['lan'];
@@ -82,19 +84,37 @@ $links = $content[$lan];
             <?php endforeach; ?>
         </ul>
         <div class="language">
-            <button>
-                <?php if ($lan == "en"): ?>
-                    <img src="../public/img/usa.JPG" alt="">
-                <?php else: ?>
-                    <img src="../public/img/mexico.webp" alt="">
-                <?php endif; ?>
-                <i class="fa-solid fa-caret-down"></i>
-            </button>
+            <div class="dropdown">
+                <button class="dropdown-button" onclick="toggleDropdownDesktop()">
+                    <?php if ($lan == "en"): ?>
+                        <img src="../public/img/usa.JPG" alt="">
+                    <?php else: ?>
+                        <img src="../public/img/mexico.webp" alt="">
+                    <?php endif; ?>
+                    <i class="fa-solid fa-caret-down"></i>
+                </button>
+                <div id="dropdown-desktop" class="dropdown-content">
+                    <form action="" method="POST">
+                        <input type="hidden" name="lan" value="en">
+                        <button type="submit">
+                            <img src="../public/img/usa.JPG" alt=""> English
+                        </button>
+                    </form>
+                    <form action="" method="POST">
+                        <input type="hidden" name="lan" value="es">
+                        <button type="submit">
+                            <img src="../public/img/mexico.webp" alt=""> Español
+                        </button>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
 </nav>
 
 <script>
+    const dropdownDesktop = document.getElementById('dropdown-desktop');
+
     function handleAnchorChange(params) {
         var anchor = window.location.hash
         if (anchor) {
@@ -129,12 +149,16 @@ $links = $content[$lan];
         document.getElementById("collapse-container").classList.add("show")
     }
 
+    function toggleDropdownDesktop() {
+        dropdownDesktop.classList.toggle('show');
+    }
+
     document.getElementById("collapse-container").addEventListener("click", event => {
         if (event.target == event.currentTarget) {
             document.getElementById("collapse-container").classList.remove("show")
         }
     })
-    
+
     window.onscroll = function() {
         changeNavbarColor();
     };
