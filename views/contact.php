@@ -83,13 +83,15 @@ $background = $content['background'];
                         <label for="message">Your message</label>
                         <textarea name="message" id="message" rows="6" onfocus="flotatingFocus('message')" onblur="unfocus('message')"></textarea>
                     </div>
-                    <div class="checkbox">
+                    <div id="input-container-terms" class="checkbox">
                         <input type="checkbox" name="terms" id="terms">
                         <label for="terms">
-                            I have read and accept the <a href="#">Privacy Notice</a> and the <a href="#">Terms And Conditions</a> of this website.
+                            I have read and accept the <a href="#">Privacy Notice</a> and the <a href="#">Terms and Conditions</a> of this website.
                         </label>
                     </div>
-                    <button>Send</button>
+                    <button id="btnContact" onclick="saveContact()">
+                        <i class="fa-solid fa-circle-notch fa-spin"></i> Send
+                    </button>
                 <?php else: ?>
                     <h2>Ponte en contacto</h2>
                     <div id="input-container-name" class="flotating-input">
@@ -114,15 +116,22 @@ $background = $content['background'];
                             He leído y acepto el <a href="#">Aviso de Privacidad</a> y los <a href="#">Terminos y Condiciones</a> de este sitio web.
                         </label>
                     </div>
-                    <button>Enviar</button>
+                    <button id="btnContact" onclick="saveContact()">
+                        <i class="fa-solid fa-circle-notch fa-spin"></i>Enviar
+                    </button>
                 <?php endif; ?>
             </div>
         </div>
     </div>
 </div>
 
+<div id="notify" class="notify">
+    <p id="notify-text"></p>
+</div>
+
 <script>
     var infoCollapse = true
+    var fetching = false
 
     function flotatingFocus(id) {
         document.getElementById(`input-container-${id}`).classList.add("focus")
@@ -142,5 +151,115 @@ $background = $content['background'];
         }
 
         infoCollapse = !infoCollapse
+    }
+
+    function showNotify(type, text) {
+        document.getElementById('notify-text').innerText = text
+        document.getElementById('notify').classList.add(`show`)
+        document.getElementById('notify').classList.add(`${type}`)
+
+        setTimeout(() => {
+            document.getElementById('notify').classList.remove(`show`)
+            document.getElementById('notify').classList.remove(`${type}`)
+        }, 5000)
+    }
+
+    function validateForm() {
+        const name = document.getElementById("name")
+        const phone = document.getElementById("phone")
+        const email = document.getElementById("email")
+        const message = document.getElementById("message")
+        const terms = document.getElementById("terms")
+
+        document.getElementById('input-container-name').classList.remove('invalid')
+        document.getElementById('input-container-phone').classList.remove('invalid')
+        document.getElementById('input-container-email').classList.remove('invalid')
+        document.getElementById('input-container-message').classList.remove('invalid')
+        document.getElementById('input-container-terms').classList.remove('invalid')
+
+        var result = true
+
+        if (name.value.trim() == "") {
+            document.getElementById('input-container-name').classList.add('invalid')
+            result = false
+        }
+
+        const phoneRegex = /^\d+$/;
+        if (phone.value.trim() == "" || !phoneRegex.test(phone.value)) {
+            document.getElementById('input-container-phone').classList.add('invalid')
+            result = false
+        }
+
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (email.value.trim() == "" || !emailRegex.test(email.value)) {
+            document.getElementById('input-container-email').classList.add('invalid')
+            result = false
+        }
+
+        if (message.value.trim() == "") {
+            document.getElementById('input-container-message').classList.add('invalid')
+            result = false
+        }
+
+        if (!terms.checked) {
+            document.getElementById('input-container-terms').classList.add('invalid')
+            result = false
+        }
+
+        return result
+    }
+
+    function saveContact() {
+        if (validateForm() && !fetching) {
+            const data = {
+                name: document.getElementById("name").value,
+                phone: document.getElementById("phone").value,
+                email: document.getElementById("email").value,
+                message: document.getElementById("message").value
+            };
+
+            const urlEncodedData = new URLSearchParams(data).toString();
+
+            document.getElementById('btnContact').classList.add("fetching")
+            document.getElementById('btnContact').setAttribute("disable", true)
+            fetching = true
+
+            fetch('http://localhost/panel/apis/contact.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    },
+                    body: urlEncodedData
+                })
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('btnContact').classList.remove("fetching")
+                    document.getElementById('btnContact').removeAttribute("disable")
+                    fetching = false
+                    if (data.status == "success") {
+                        <?php if ($lan == "en"): ?>
+                            showNotify("success", "We received your message, an advisor will contact you soon.")
+                        <?php else: ?>
+                            showNotify("success", "Recibimos tu mensaje, pronto un asesor se pondra en contacto contigo")
+                        <?php endif; ?>
+                    } else {
+                        <?php if ($lan == "en"): ?>
+                            showNotify("error", "Something went wrong, please try again later or contact technical support.")
+                        <?php else: ?>
+                            showNotify("error", "Algo salió mal, intentalo de nuevo más tarde o comunicate a soporte técnico")
+                        <?php endif; ?>
+                    }
+                })
+                .catch(error => {
+                    document.getElementById('btnContact').classList.remove("fetching")
+                    document.getElementById('btnContact').removeAttribute("disable")
+                    fetching = false
+                    <?php if ($lan == "en"): ?>
+                        showNotify("error", "Something went wrong, please try again later or contact technical support.")
+                    <?php else: ?>
+                        showNotify("error", "Algo salió mal, intentalo de nuevo más tarde o comunicate a soporte técnico")
+                    <?php endif; ?>
+                });
+        }
     }
 </script>

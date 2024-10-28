@@ -14,6 +14,8 @@
     --primary: #882D17;
     --primary-dark: #5C1A0A;
     --primary-blur: rgba(136, 45, 23, 0.5);
+    --danger: #dc3545;
+    --success: #5cb85c;
 
     --font: "Roboto", sans-serif
 }
@@ -907,6 +909,22 @@ footer .social-media .links a {
     cursor: pointer;
 }
 
+.contact-form .form .flotating-input.invalid {
+    border: 2px solid var(--danger);
+}
+
+.contact-form .form .flotating-input.invalid label {
+    color: var(--danger);
+}
+
+.contact-form .form .checkbox.invalid label {
+    color: var(--danger);
+}
+
+.contact-form .form .checkbox.invalid .feedback {
+    display: flex;
+}
+
 .contact-form .form button {
     width: 150px;
     font-size: 16px;
@@ -918,6 +936,26 @@ footer .social-media .links a {
     text-align: center;
     border: 2px solid var(--primary);
     cursor: pointer;
+    display: flex;
+    flex-flow: row nowrap;
+    gap: 4px;
+    align-items: center;
+    justify-content: center;
+}
+
+.contact-form .form button i {
+    display: none;
+}
+
+.contact-form .form button.fetching {
+    background-color: var(--neutral-50);
+    border-color: var(--neutral-50);
+    cursor: not-allowed;
+    opacity: 0.9;
+}
+
+.contact-form .form button.fetching i {
+    display: block;
 }
 
 .checkbox {
@@ -929,12 +967,13 @@ footer .social-media .links a {
 
 .checkbox label {
     font-size: 12px;
-    font-weight: 600;
+    font-weight: 400;
     color: #FFF;
 }
 
 .checkbox label a {
-    color: var(--primary);
+    font-weight: 700;
+    color: #FFF;
     text-decoration: underline;
 }
 
@@ -1086,6 +1125,37 @@ footer .social-media .links a {
 
 .dropdown-content.show {
     display: block;
+}
+
+.notify {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+    border-radius: 12px;
+    width: 0;
+    color: #FFF;
+    opacity: 0;
+    transition: all 0.5s ease-in;
+    position: fixed;
+    bottom: 16px;
+    left: 16px;
+    overflow: hidden;
+}
+
+.notify.success {
+    background-color: var(--success)
+}
+
+.notify.error {
+    background-color: var(--danger)
+}
+
+.notify.show {
+    opacity: 1;
+    width: 250px;
+    padding: 12px;
 }
 
 @media (max-width: 640px) {

@@ -12,7 +12,7 @@ class Security
         session_start();
         setcookie(
             'auth_token',
-            Security::hash($username . time()),
+            base64_encode($username) . "." . Security::hash($username . time()),
             time() + (86400 * 30),
             '/',
             '',
@@ -33,5 +33,11 @@ class Security
             false, #cambiar a true cuando haya https
             true
         );
+    }
+
+    public static function get_username()
+    {
+        $username = explode(".", $_COOKIE['auth_token'])[0];
+        return base64_decode($username);
     }
 }

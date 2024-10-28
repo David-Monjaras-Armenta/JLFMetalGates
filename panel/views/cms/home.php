@@ -110,7 +110,6 @@ if (!empty($search)) {
         for ($i = 0; $i < count($enItems); $i++) {
             $enContent = $enItems[$i];
             $esContent = $esItems[$i];
-            $images = explode(", ", $enContent['image']);
         ?>
             <div class="card">
                 <form action="" method="POST" enctype="multipart/form-data">
@@ -152,17 +151,17 @@ if (!empty($search)) {
                     <div class="row">
                         <div class="column">
                             <label for="image_desk_<?php echo $enContent['id']; ?>">Imagen Desktop:</label>
-                            <img src="<?= $domain ?>/panel/images/<?= $images[0] ?>" onclick="toFocus('image_desk_<?php echo $enContent['id']; ?>')">
+                            <img src="<?= $enContent['image'][0] ?>" onclick="toFocus('image_desk_<?php echo $enContent['id']; ?>')">
                             <input type="file" id="image_desk_<?php echo $enContent['id']; ?>" name="image_desk" accept="image/webp, image/jpeg" value="" hidden>
                         </div>
                         <div class="column">
                             <label for="image_tab_<?php echo $enContent['id']; ?>">Imagen Tablet:</label>
-                            <img src="<?= $domain ?>/panel/images/<?= $images[1] ?>" onclick="toFocus('image_tab_<?php echo $enContent['id']; ?>')">
+                            <img src="<?= $enContent['image'][1] ?>" onclick="toFocus('image_tab_<?php echo $enContent['id']; ?>')">
                             <input type="file" id="image_tab_<?php echo $enContent['id']; ?>" name="image_tab" accept="image/webp, image/jpeg" hidden>
                         </div>
                         <div class="column">
                             <label for="image_mov_<?php echo $enContent['id']; ?>">Imagen Móvil:</label>
-                            <img src="<?= $domain ?>/panel/images/<?= $images[2] ?>" onclick="toFocus('image_mov_<?php echo $enContent['id']; ?>')">
+                            <img src="<?= $enContent['image'][2] ?>" onclick="toFocus('image_mov_<?php echo $enContent['id']; ?>')">
                             <input type="file" id="image_mov_<?php echo $enContent['id']; ?>" name="image_mov" accept="image/webp, image/jpeg" hidden>
                         </div>
                     </div>
