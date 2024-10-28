@@ -87,6 +87,45 @@ class ContentModel
     }
 
     /**
+     * Consulta el contenido con el id especificado
+     * 
+     * @param int $id id de la imagen
+     * @return array arreglo asosiativo con los datos del contenido
+     */
+    public function read_by_id($id)
+    {
+        $content = [];
+        try {
+            $conn = $this->db->get_connection();
+            $stmt = $conn->prepare("SELECT * FROM cat_content WHERE id = ?");
+            $stmt->bind_param("i", $id);
+
+            $stmt->execute();
+            $result = $stmt->get_result();
+
+            if ($result->num_rows > 0) {
+                while ($row = $result->fetch_assoc()) {
+                    $content = [
+                        "id" => intval($row["id"]),
+                        "name" => strval($row["v_name"]),
+                        "title" => strval($row["v_title"]),
+                        "text" => strval($row["v_text"]),
+                        "image" => $row["v_image"],
+                        "language" => intval($row["id_language"]),
+                    ];
+                }
+            }
+            
+            $stmt->close();
+        } catch (\Throwable $th) {
+            $content = [];
+            Logger::log(Logger::$ERROR, $th);
+        } finally {
+            return $content;
+        }
+    }
+
+    /**
      * Modifica los datos del contenido especificado
      * 
      * @param int $id id del contenido

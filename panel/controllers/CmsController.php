@@ -23,14 +23,20 @@ class CmsController
         $data = [];
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (isset($_POST["id_en"])) {
+                $images = explode(", ", $this->contentModel->read_by_id($_POST['id_en'])['image']);
+
+                $image_desk = $images[0];
+                $image_tab = $images[1];
+                $image_mov = $images[2];
+
                 if ($_FILES["image_desk"]["size"] > 0) {
-                    ImageHandler::upload($_FILES["image_desk"], "pictures/home/{$_POST['name_en']}", "desktop");
+                    $image_desk = ImageHandler::upload($_FILES["image_desk"], "pictures");
                 }
                 if ($_FILES["image_tab"]["size"] > 0) {
-                    ImageHandler::upload($_FILES["image_tab"], "pictures/home/{$_POST['name_en']}", "tablet");
+                    $image_tab = ImageHandler::upload($_FILES["image_tab"], "pictures");
                 }
                 if ($_FILES["image_mov"]["size"] > 0) {
-                    ImageHandler::upload($_FILES["image_mov"], "pictures/home/{$_POST['name_en']}", "movile");
+                    $image_mov = ImageHandler::upload($_FILES["image_mov"], "pictures");
                 }
 
                 $en = [
@@ -47,9 +53,9 @@ class CmsController
                     "text" => $_POST["text_es"],
                 ];
 
-                $result_en = $this->contentModel->update($en["id"], $en["name"], $en["title"], $en["text"], "pictures/home/desktop.jpg, pictures/home/tablet.jpg, pictures/home/movile.jpg");
+                $result_en = $this->contentModel->update($en["id"], $en["name"], $en["title"], $en["text"], "{$image_desk}, {$image_tab}, {$image_mov}");
 
-                $result_es = $this->contentModel->update($es["id"], $es["name"], $es["title"], $es["text"], "pictures/home/desktop.jpg, pictures/home/tablet.jpg, pictures/home/movile.jpg");
+                $result_es = $this->contentModel->update($es["id"], $es["name"], $es["title"], $es["text"], "{$image_desk}, {$image_tab}, {$image_mov}");
 
                 if ($result_en && $result_es) {
                     $data["notify"] = [
@@ -62,11 +68,26 @@ class CmsController
                         "message" => "Error al modificar '{$en['name']}'"
                     ];
                 }
+            } else if(isset($_POST["delete"])) {
+                $result_en = $this->contentModel->delete($_POST['en']);
+                $result_es = $this->contentModel->delete($_POST['es']);
+
+                if ($result_en && $result_es) {
+                    $data["notify"] = [
+                        "type" => "success",
+                        "message" => "'{$_POST['delete']}' eliminado correctamente"
+                    ];
+                } else {
+                    $data["notify"] = [
+                        "type" => "error",
+                        "message" => "Error al eliminar '{$_POST['delete']}'"
+                    ];
+                }
             } else {
                 if (isset($_FILES["image_desk"]) && isset($_FILES["image_tab"]) && isset($_FILES["image_mov"])) {
-                    $image_desk = ImageHandler::upload($_FILES["image_desk"], "pictures/home/{$_POST['name']}", "desktop");
-                    $image_tab = ImageHandler::upload($_FILES["image_tab"], "pictures/home/{$_POST['name']}", "tablet");
-                    $image_mov = ImageHandler::upload($_FILES["image_mov"], "pictures/home/{$_POST['name']}", "movile");
+                    $image_desk = ImageHandler::upload($_FILES["image_desk"], "pictures");
+                    $image_tab = ImageHandler::upload($_FILES["image_tab"], "pictures");
+                    $image_mov = ImageHandler::upload($_FILES["image_mov"], "pictures/");
 
                     $en = [
                         "name" => $_POST["name"],
@@ -114,11 +135,15 @@ class CmsController
         $data = [];
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (isset($_POST['id_en'])) {
+                $images = explode(", ", $this->contentModel->read_by_id($_POST['id_en'])['image']);
+                $image_before = $images[0];
+                $image_after = $images[1];
+
                 if ($_FILES["image_before"]["size"] > 0) {
-                    $image_before = ImageHandler::upload($_FILES["image_before"], "pictures/solutions/{$_POST['name_en']}", "before");
+                    $image_before = ImageHandler::upload($_FILES["image_before"], "pictures");
                 }
                 if ($_FILES["image_after"]["size"] > 0) {
-                    $image_after = ImageHandler::upload($_FILES["image_after"], "pictures/solutions/{$_POST['name_en']}", "after");
+                    $image_after = ImageHandler::upload($_FILES["image_after"], "pictures");
                 }
 
                 $en = [
@@ -148,10 +173,25 @@ class CmsController
                         "message" => "Error al modificar '{$en['name']}'"
                     ];
                 }
+            } else if(isset($_POST["delete"])) {
+                $result_en = $this->contentModel->delete($_POST['en']);
+                $result_es = $this->contentModel->delete($_POST['es']);
+
+                if ($result_en && $result_es) {
+                    $data["notify"] = [
+                        "type" => "success",
+                        "message" => "'{$_POST['delete']}' eliminado correctamente"
+                    ];
+                } else {
+                    $data["notify"] = [
+                        "type" => "error",
+                        "message" => "Error al eliminar '{$_POST['delete']}'"
+                    ];
+                }
             } else {
                 if (isset($_FILES["image_after"]) && isset($_FILES["image_before"])) {
-                    $image_before = ImageHandler::upload($_FILES["image_before"], "pictures/solutions/{$_POST['name']}", "before");
-                    $image_after = ImageHandler::upload($_FILES["image_after"], "pictures/solutions/{$_POST['name']}", "after");
+                    $image_before = ImageHandler::upload($_FILES["image_before"], "pictures");
+                    $image_after = ImageHandler::upload($_FILES["image_after"], "pictures");
 
                     $en = [
                         "name" => $_POST["name"],
@@ -197,8 +237,9 @@ class CmsController
         $data = [];
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (isset($_POST['id_en'])) {
+                $image = $this->contentModel->read_by_id($_POST['id_en'])['image'];
                 if ($_FILES["image"]["size"] > 0) {
-                    $image = ImageHandler::upload($_FILES["image"], "pictures/about", "icon_{$_POST['name_en']}");
+                    $image = ImageHandler::upload($_FILES["image"], "pictures");
                 }
 
                 $en = [
@@ -230,9 +271,24 @@ class CmsController
                         "message" => "Error al modificar '{$en['name']}'"
                     ];
                 }
+            } else if(isset($_POST["delete"])) {
+                $result_en = $this->contentModel->delete($_POST['en']);
+                $result_es = $this->contentModel->delete($_POST['es']);
+
+                if ($result_en && $result_es) {
+                    $data["notify"] = [
+                        "type" => "success",
+                        "message" => "'{$_POST['delete']}' eliminado correctamente"
+                    ];
+                } else {
+                    $data["notify"] = [
+                        "type" => "error",
+                        "message" => "Error al eliminar '{$_POST['delete']}'"
+                    ];
+                }
             } else {
                 if ($_FILES["image"]["size"] > 0) {
-                    $image = ImageHandler::upload($_FILES["image"], "pictures/about", "icon_{$_POST['name']}");
+                    $image = ImageHandler::upload($_FILES["image"], "pictures");
 
                     $en = [
                         "name" => $_POST["name"],
@@ -298,9 +354,25 @@ class CmsController
                     $result_en = $this->contentModel->update($en["id"], $en["name"], $en["title"], $en["text"], "");
 
                     $result_es = $this->contentModel->update($es["id"], $es["name"], $es["title"], $es["text"], "");
+                } else if(isset($_POST["delete"])) {
+                    $result_en = $this->contentModel->delete($_POST['en']);
+                    $result_es = $this->contentModel->delete($_POST['es']);
+    
+                    if ($result_en && $result_es) {
+                        $data["notify"] = [
+                            "type" => "success",
+                            "message" => "'{$_POST['delete']}' eliminado correctamente"
+                        ];
+                    } else {
+                        $data["notify"] = [
+                            "type" => "error",
+                            "message" => "Error al eliminar '{$_POST['delete']}'"
+                        ];
+                    }
                 } else {
+                    $image = $this->contentModel->read_by_id($_POST['id_en'])['image'];
                     if ($_FILES["image"]["size"] > 0) {
-                        $image = ImageHandler::upload($_FILES["image"], "pictures/gallery", "image_{$_POST['name_en']}");
+                        $image = ImageHandler::upload($_FILES["image"], "pictures");
                     }
 
                     $en = [
@@ -327,6 +399,21 @@ class CmsController
                     $data["notify"] = [
                         "type" => "error",
                         "message" => "Error al modificar '{$_POST['name_en']}'"
+                    ];
+                }
+            } else if(isset($_POST["delete"])) {
+                $result_en = $this->contentModel->delete($_POST['en']);
+                $result_es = $this->contentModel->delete($_POST['es']);
+
+                if ($result_en && $result_es) {
+                    $data["notify"] = [
+                        "type" => "success",
+                        "message" => "'{$_POST['delete']}' eliminado correctamente"
+                    ];
+                } else {
+                    $data["notify"] = [
+                        "type" => "error",
+                        "message" => "Error al eliminar '{$_POST['delete']}'"
                     ];
                 }
             } else {
@@ -393,8 +480,9 @@ class CmsController
         $data = [];
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (isset($_POST['id_en'])) {
+                $image = $this->contentModel->read_by_id($_POST['id_en'])['image'];
                 if ($_FILES["image"]["size"] > 0) {
-                    $image = ImageHandler::upload($_FILES["image"], "pictures/contact", "icon_{$_POST['name_en']}");
+                    $image = ImageHandler::upload($_FILES["image"], "pictures");
                 }
 
                 $en = [
@@ -426,9 +514,24 @@ class CmsController
                         "message" => "Error al modificar '{$_POST['name_en']}'"
                     ];
                 }
+            } else if(isset($_POST["delete"])) {
+                $result_en = $this->contentModel->delete($_POST['en']);
+                $result_es = $this->contentModel->delete($_POST['es']);
+
+                if ($result_en && $result_es) {
+                    $data["notify"] = [
+                        "type" => "success",
+                        "message" => "'{$_POST['delete']}' eliminado correctamente"
+                    ];
+                } else {
+                    $data["notify"] = [
+                        "type" => "error",
+                        "message" => "Error al eliminar '{$_POST['delete']}'"
+                    ];
+                }
             } else {
                 if ($_FILES["image"]["size"] > 0) {
-                    $image = ImageHandler::upload($_FILES["image"], "pictures/contact", "icon_{$_POST['name']}");
+                    $image = ImageHandler::upload($_FILES["image"], "pictures");
 
                     $en = [
                         "name" => $_POST["name"],

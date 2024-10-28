@@ -146,8 +146,33 @@ if (!empty($search)) {
 
                     <input type="submit" value="Enviar">
                 </form>
+                <button class="delete-button" onclick="showDeleteAlert(<?= $enContent['id'] ?>, <?= $esContent['id'] ?>, '<?= $esContent['name'] ?>')">Eliminar</button>
             </div>
         <?php } ?>
+    </div>
+
+    <div id="alert" class="alert">
+        <div class="alert-content">
+            <div class="body">
+                <p>
+                    <b>¿Estas seguro que deseas eliminar este contenido?</b>
+                    <br />
+                    <br />
+                    Su eliminación puede ser permanente
+                </p>
+            </div>
+            <div class="footer">
+                <button class="cancel-button" onclick="hideDeleteAlert()">Cancelar</button>
+                <form action="" method="POST">
+                    <input id="delete_name" type="hidden" name="delete">
+                    <input id="delete_es" type="hidden" name="es">
+                    <input id="delete_en" type="hidden" name="en">
+                    <button class="submit-button" type="submit">
+                        Continuar
+                    </button>
+                </form>
+            </div>
+        </div>
     </div>
 
     <?php if (isset($data["notify"])): ?>
@@ -172,6 +197,22 @@ if (!empty($search)) {
 
         function toFocus(id) {
             document.getElementById(id).click();
+        }
+
+        function showDeleteAlert(es, en, name) {
+            document.getElementById('delete_name').value = name
+            document.getElementById('delete_es').value = es
+            document.getElementById('delete_en').value = en
+
+            document.getElementById('alert').classList.add("show")
+        }
+
+        function hideDeleteAlert(es, en, name) {
+            document.getElementById('delete_name').value = ""
+            document.getElementById('delete_es').value = ""
+            document.getElementById('delete_en').value = ""
+
+            document.getElementById('alert').classList.remove("show")
         }
     </script>
 </body>

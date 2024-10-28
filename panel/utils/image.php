@@ -8,15 +8,20 @@ $dotenv->load();
 
 class ImageHandler
 {
-    public static function upload($image, $path, $name)
+    public static function upload($image, $path)
     {
         $basePath = dirname(__DIR__, 1) . "/images";
         if (!is_dir($basePath . "/" . $path)) {
             mkdir($basePath . "/" . $path, 0777, true);
         }
 
+        $hash = hash_file('sha256', $image['tmp_name']);
+        if (!$hash) {
+            return '';
+        }
+
         $ext = pathinfo($image['name'], PATHINFO_EXTENSION);
-        $name = $name . '.' . $ext;
+        $name = $hash . '.' . $ext;
         $file_name = $basePath . "/" . $path . "/" . $name;
 
         if (is_file($file_name)) {
