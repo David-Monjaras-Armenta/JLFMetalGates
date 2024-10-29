@@ -179,7 +179,7 @@ $background = $content['background'];
         isGrabbing = true
 
         window.addEventListener("touchmove", resizeTouch)
-        window.addEventListener("touched", stopResize)
+        window.addEventListener("touchend", stopResize)
     })
     
     document.querySelector(`.button-group button.active`).click()
