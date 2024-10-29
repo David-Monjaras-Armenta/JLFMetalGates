@@ -435,7 +435,7 @@ class CmsController
                     $result_es = $this->contentModel->create($es["name"], $es["title"], $es["text"], "", 5, 1);
                 } else {
                     if ($_FILES["image"]["size"] > 0) {
-                        $image = ImageHandler::upload($_FILES["image"], "pictures/gallery", "image_{$_POST['name']}");
+                        $image = ImageHandler::upload($_FILES["image"], "pictures");
 
                         $en = [
                             "name" => $_POST["name"],
