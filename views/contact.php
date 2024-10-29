@@ -86,7 +86,7 @@ $background = $content['background'];
                     <div id="input-container-terms" class="checkbox">
                         <input type="checkbox" name="terms" id="terms">
                         <label for="terms">
-                            I have read and accept the <a href="#">Privacy Notice</a> and the <a href="#">Terms and Conditions</a> of this website.
+                            I have read and accept the <a href="/privacy-notice.php" target="_blank">Privacy Notice and Terms and Conditions</a> of this website.
                         </label>
                     </div>
                     <button id="btnContact" onclick="saveContact()">
@@ -113,7 +113,7 @@ $background = $content['background'];
                     <div id="checkbox" class="checkbox">
                         <input type="checkbox" name="terms" id="terms">
                         <label for="terms">
-                            He leído y acepto el <a href="#">Aviso de Privacidad</a> y los <a href="#">Terminos y Condiciones</a> de este sitio web.
+                            He leído y acepto el <a href="/aviso-privacidad.html" target="_blank">Aviso de Privacidad y Terminos y Condiciones</a> de este sitio web.
                         </label>
                     </div>
                     <button id="btnContact" onclick="saveContact()">

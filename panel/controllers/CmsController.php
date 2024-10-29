@@ -299,7 +299,7 @@ class CmsController
                     $es = [
                         "name" => $_POST["name"],
                         "title" => $_POST["title_es"],
-                        "text" => $_POST["text_en"],
+                        "text" => $_POST["text_es"],
                     ];
 
                     $result_en = $this->contentModel->create($en["name"], $en["title"], $en["text"], $image, 4, 2);
@@ -348,7 +348,7 @@ class CmsController
                         "id" => intval($_POST['id_es']),
                         "name" => $_POST["name_en"],
                         "title" => $_POST["title_es"],
-                        "text" => $_POST["text_en"],
+                        "text" => $_POST["text_es"],
                     ];
 
                     $result_en = $this->contentModel->update($en["id"], $en["name"], $en["title"], $en["text"], "");
@@ -427,7 +427,7 @@ class CmsController
                     $es = [
                         "name" => $_POST["name"],
                         "title" => $_POST["title_es"],
-                        "text" => $_POST["text_en"],
+                        "text" => $_POST["text_es"],
                     ];
 
                     $result_en = $this->contentModel->create($en["name"], $en["title"], $en["text"], "", 5, 2);

@@ -19,29 +19,21 @@ if (isset($_COOKIE['lan'])) {
             <div class="list">
                 <?php if ($lan == "en"): ?>
                     <p class="item">
-                        <i class="fa-solid fa-map-location-dot"></i>
-                        address
-                    </p>
-                    <p class="item">
                         <i class="fa-solid fa-mobile-screen-button"></i>
-                        Mobile: 214 734 2383
+                        Whatsapp: +1 (214) 734-2383
                     </p>
                     <p class="item">
                         <i class="fa-solid fa-phone"></i>
-                        Office: (813) 454 2133
+                        Office: +1 (813) 454-2133
                     </p>
                 <?php else: ?>
                     <p class="item">
-                        <i class="fa-solid fa-map-location-dot"></i>
-                        address
-                    </p>
-                    <p class="item">
                         <i class="fa-solid fa-mobile-screen-button"></i>
-                        Móvil: 214 734 2383
+                        Whatsapp: +1 (214) 734-2383
                     </p>
                     <p class="item">
                         <i class="fa-solid fa-phone"></i>
-                        Oficina: (813) 454 2133
+                        Oficina: +1 (813) 454-2133
                     </p>
                 <?php endif; ?>
             </div>
