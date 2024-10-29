@@ -29,7 +29,7 @@ try {
                 $message .= "Teléfono: <b>{$_POST['phone']}</b><br/>";
                 $message .= "Mensaje: {$_POST['message']}";
 
-                #MailHandler::send_mail($_ENV['ADMIN_MAIL'], "JlF Metal Gates - Nuevo Contacto", $messge);
+                MailHandler::send_mail($_ENV['ADMIN_MAIL'], "JlF Metal Gates - Nuevo Contacto", $messge);
                 $response = [
                     "status" => "success",
                     "message" => "Contacto registrado"
