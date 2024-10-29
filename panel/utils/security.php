@@ -16,7 +16,7 @@ class Security
             time() + (86400 * 30),
             '/',
             '',
-            false, #cambiar a true cuando haya https
+            true, 
             true
         );
         $_SESSION['username'] = $username;
@@ -30,7 +30,7 @@ class Security
             time() + (86400 * 30),
             '/',
             '',
-            false, #cambiar a true cuando haya https
+            true, 
             true
         );
     }
