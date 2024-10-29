@@ -31,7 +31,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <title>JLF Metal Gates</title>
 
     <link rel="stylesheet" href="./public/css/style.css">
-    <link rel="icon" href="favicon.png" type="./public/img/logo-simple-blanco.svg">
+    <link rel="icon" href="./public/img/logo-simple-blanco.svg" type="image/svg">
     <script src="https://kit.fontawesome.com/6f07658194.js" crossorigin="anonymous"></script>
 </head>
 

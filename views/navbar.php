@@ -130,25 +130,6 @@ $links = $content[$lan];
     const linksExpand = document.querySelectorAll('.expand .menu .link a');
     const linksCollapse = document.querySelectorAll('.collapse .collapse-container .collapse-menu .menu .link a');
 
-    function handleAnchorChange(params) {
-        var anchor = window.location.hash
-        if (anchor) {
-            const links = document.querySelectorAll('.link a');
-            links.forEach(link => {
-                link.classList.remove('active');
-            });
-
-            const anchorLinks = document.querySelectorAll(`a[href="${anchor}"]`);
-            if (anchorLinks) {
-                anchorLinks.forEach(link => {
-                    link.classList.add('active');
-                })
-            }
-        }
-
-        document.getElementById("collapse-container").classList.remove("show")
-    }
-
     function changeNavbarColor() {
         const navbar = document.querySelector('nav');
         const scrollPosition = window.scrollY;
@@ -195,4 +176,8 @@ $links = $content[$lan];
         changeNavbarColor();
         updateActiveLink();
     };
+
+    window.addEventListener("hashchange" event => {
+        document.getElementById("collapse-container").classList.remove("show")
+    })
 </script>
