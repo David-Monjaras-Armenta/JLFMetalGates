@@ -177,7 +177,7 @@ $links = $content[$lan];
         updateActiveLink();
     };
 
-    window.addEventListener("hashchange" event => {
+    window.addEventListener("hashchange", event => {
         document.getElementById("collapse-container").classList.remove("show")
     })
 </script>
