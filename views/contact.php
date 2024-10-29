@@ -209,6 +209,14 @@ $background = $content['background'];
         return result
     }
 
+    function cleanForm() {
+        document.getElementById("name").values = ""
+        document.getElementById("phone").values = ""
+        document.getElementById("email").values = ""
+        document.getElementById("message").values = ""
+        document.getElementById("terms").checked = false
+    }
+
     function saveContact() {
         if (validateForm() && !fetching) {
             const data = {
@@ -224,7 +232,7 @@ $background = $content['background'];
             document.getElementById('btnContact').setAttribute("disable", true)
             fetching = true
 
-            fetch('http://localhost/panel/apis/contact.php', {
+            fetch('https://jlfmetalgates.com/panel/apis/contact.php', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/x-www-form-urlencoded'

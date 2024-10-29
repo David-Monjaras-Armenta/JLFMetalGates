@@ -10,10 +10,16 @@ $dotenv = Dotenv::createImmutable(dirname(__DIR__, 2));
 $dotenv->load();
 
 header('Content-Type: application/json');
+
 header('Access-Control-Allow-Origin: *');
-header('Access-Control-Allow-Methods: POST');
-header('Access-Control-Allow-Headers: Content-Type');
-header('Content-Type: application/json');
+header("Access-Control-Allow-Headers: X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Request-Method, Authorization");
+header("Access-Control-Request-Methods: GET, POST, PUT, DELETE, OPTIONS");
+header("Allow: GET, POST, PUT, DELETE, OPTIONS");
+
+if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+    http_response_code(200);
+    exit();
+}
 
 $response = [
     "status" => "error",
@@ -29,7 +35,7 @@ try {
                 $message .= "Teléfono: <b>{$_POST['phone']}</b><br/>";
                 $message .= "Mensaje: {$_POST['message']}";
 
-                MailHandler::send_mail($_ENV['ADMIN_MAIL'], "JlF Metal Gates - Nuevo Contacto", $messge);
+                MailHandler::send_mail($_ENV['ADMIN_MAIL'], "JlF Metal Gates - Nuevo Contacto", $message);
                 $response = [
                     "status" => "success",
                     "message" => "Contacto registrado"

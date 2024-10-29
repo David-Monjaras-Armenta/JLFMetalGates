@@ -25,10 +25,11 @@ class MailHandler
             $mail->SMTPSecure = $_ENV['MAIL_SECURE'];
             $mail->Port = $_ENV['MAIL_PORT'];
 
-            $mail->setFrom($_ENV['MAIL_FROM'], $_ENV['MAIL_NAME']);
-            $mail->addAddress($to['mail'], $to['name']);
+            $mail->setFrom($_ENV['MAIL_FROM'], 'Info JLF Metal Gates');
+            $mail->addAddress($to, 'Admin JLF Metal Gates');
 
             $mail->isHTML(true);
+            $mail->ContentType = 'text/html; charset=UTF-8';
             $mail->Subject = $subject;
             $mail->Body = $message;
 

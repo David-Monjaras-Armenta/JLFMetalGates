@@ -940,6 +940,7 @@ footer .social-media .links a {
     color: #FFF;
     border: none;
     background-color: transparent;
+    width: 100%;
 }
 
 .contact-form .form input, textarea:focus {
