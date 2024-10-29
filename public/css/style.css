@@ -13,7 +13,7 @@
     --neutral-10: #12121A;
     --primary: #882D17;
     --primary-dark: #5C1A0A;
-    --primary-blur: rgba(136, 45, 23, 0.5);
+    --primary-blur: rgba(92, 26, 10, 0.5);
     --danger: #dc3545;
     --success: #5cb85c;
 
@@ -120,8 +120,8 @@ nav {
 }
 
 nav.scrolled {
-    background-color: rgba(136, 45, 23, .5);
-    backdrop-filter: blur(5px);
+    background-color: rgba(136, 45, 23, .3);
+    backdrop-filter: blur(7px);
 }
 
 .menu {
@@ -151,9 +151,19 @@ nav.scrolled {
     font-weight: 700;
 }
 
-nav > .brand > h1 {
-    font-size: 32px;
-    margin: 0;
+nav > .brand > img {
+    width: 250px;
+    height: auto;
+    object-fit: scale-down;
+}
+
+.collapse-menu .brand > img {
+    width: 100px;
+    height: 100px;
+    object-fit: scale-down;
+    background-color: rgba(0, 0, 0, 0.3);
+    padding: 10px;
+    border-radius: 50%;
 }
 
 nav > .expand {
@@ -210,8 +220,8 @@ nav > .collapse {
     justify-content: center;
 }
 
-.collapse-menu > .language > button {
-    width: auto;
+.collapse-menu > .language > .dropdown {
+    width: 100%;
     height: auto;
     background-color: transparent;
     border: none;
@@ -221,7 +231,14 @@ nav > .collapse {
     gap: 8px;
     color: #fff;
     align-items: center;
+    justify-content: center;
     padding: 12px;
+}
+
+.collapse-menu > .language > .dropdown > button {
+    width: auto;
+    justify-content: center;
+    align-items: center;
 }
 
 .collapse-menu > .language > button > img {
@@ -413,40 +430,58 @@ nav > .collapse {
 }
 
 .comparator {
+    position: relative;
     display: flex;
     flex-flow: row nowrap;
     border-radius: 16px;
     border: 8px solid #FFF;
-    width: 80%;
-    height: 480px;
+    width: 1000px;
+    height: 750px;
     background-color: var(--neutral-30);
+    overflow: hidden;
 }
 
-.comparator img {
-    display: block;
-    opacity: 0;
-    width: 0;
+.comparator .comparator-img {
+    width: 100%;
     height: 100%;
-    object-fit: cover;
-    border-top-right-radius: 8px;
-    border-bottom-right-radius: 8px;
-    transition: opacity 0.5s ease;
+    overflow: hidden;
+    display: none;
 }
 
-.comparator img.left {
-    border-top-right-radius: 0;
-    border-bottom-right-radius: 0;
+.comparator .comparator-img-overflow {
+    width: 50%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+    display: none;
+}
+
+.comparator .comparator-img-overflow.active {
+    display: block;
+}
+
+.comparator .comparator-img.active {
+    display: block;
+}
+
+.comparator .comparator-img img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    transition: opacity 0.5s ease;
     border-top-left-radius: 8px;
     border-bottom-left-radius: 8px;
 }
 
-.comparator img.left.active {
-    border-right: 8px solid #FFF;
-}
-
-.comparator img.active {
-    opacity: 1;
-    width: 50%;
+.comparator .comparator-img-overflow img {
+    display: block;
+    width: 1000px;
+    height: 100%;
+    transition: opacity 0.5s ease;
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
 }
 
 .features {
@@ -714,12 +749,17 @@ footer .rights h6 {
 
 footer .brand {
     flex: 1;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: flex-end;
     padding-right: 48px;
+    width: 100%;
 }
 
-footer .brand h2{
-    text-align: end;
-    margin: 0;
+footer .brand img{
+    width: 250px;
+    height: auto;
+    object-fit: scale-down;
 }
 
 footer .contact {
@@ -1093,6 +1133,11 @@ footer .social-media .links a {
     z-index: 1;
 }
 
+.dropdown-content.mobile {
+    top: 50px;
+    left: 69px;
+}
+
 .dropdown-content form {
     color: black;
     display: block;
@@ -1158,7 +1203,60 @@ footer .social-media .links a {
     padding: 12px;
 }
 
+.comparator-slider {
+    width: 70px;
+    height: 70px;
+    cursor: grab;
+    background-color: rgba( 255, 255, 255, 0.6);
+    backdrop-filter: blur(3px);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 3;
+    border-radius: 50%;
+    display: flex;
+    flex-flow: row nowrap;
+    gap: 5px;
+    align-items: center;
+    justify-content: center;
+}
+
+.comparator-slider i {
+    color: var(--primary-dark);
+    font-size: 32px;
+}
+
+@media (max-width: 1024px) AND (min-width: 830px) {
+    .comparator {
+        width: 776px;
+        height: 570px;
+    }
+
+    .comparator .comparator-img-overflow img {
+        width: 760px;
+    }
+}
+
 @media (max-width: 640px) {
+    .comparator {
+        width: 336px;
+        height: 240px;
+    }
+
+    .comparator .comparator-img-overflow img {
+        width: 320px;
+    }
+
+    .comparator-slider {
+        width: 40px;
+        height: 40px;
+    }
+
+    .comparator-slider i {
+        font-size: 20px;
+    }
+
     .section h2 {
         font-size: 34px;
         font-weight: 400;
@@ -1192,11 +1290,6 @@ footer .social-media .links a {
         font-size: 24px;
         width: 100%;
         text-align: center;
-    }
-
-    .comparator {
-        width: 90%;
-        height: 320px;
     }
 
     .button-group {
@@ -1329,3 +1422,4 @@ footer .social-media .links a {
         width: 100%;
     }
 }
+

@@ -8,7 +8,7 @@ if (isset($_COOKIE['lan'])) {
 <footer>
     <div class="info">
         <div class="brand">
-            <h2>JLF Metal Gates</h2>
+            <img src="../public/img/logo-blanco.svg" alt="">
         </div>
         <div class="contact">
             <?php if ($lan == "en"): ?>

@@ -2,8 +2,6 @@
 include_once "./panel/cms.php";
 $content = CMS::get_content(1);
 
-var_dump($_COOKIE["lan"]);
-
 $lan = "en";
 if (isset($_COOKIE['lan'])) {
     $lan = $_COOKIE['lan'];
@@ -20,19 +18,33 @@ $links = $content[$lan];
         <div id="collapse-container" class="collapse-container">
             <div class="collapse-menu">
                 <div class="brand">
-                    <h1>JLF</h1>
+                    <img src="../public/img/logo-simple-blanco.svg" alt="">
                 </div>
                 <div class="language">
-                    <button>
-                        <?php if ($lan == "en"): ?>
-                            <img src="../public/img/usa.JPG" alt="">
-                            English
-                        <?php else: ?>
-                            <img src="../public/img/mexico.webp" alt="">
-                            Español
-                        <?php endif; ?>
-                        <i class="fa-solid fa-caret-down"></i>
-                    </button>
+                    <div class="dropdown">
+                        <button class="dropdown-button" onclick="toggleDropdownMobile()">
+                            <?php if ($lan == "en"): ?>
+                                <img src="../public/img/usa.JPG" alt=""> English
+                            <?php else: ?>
+                                <img src="../public/img/mexico.webp" alt=""> Español
+                            <?php endif; ?>
+                            <i class="fa-solid fa-caret-down"></i>
+                        </button>
+                        <div id="dropdown-mobile" class="dropdown-content mobile">
+                            <form action="" method="POST">
+                                <input type="hidden" name="lan" value="en">
+                                <button type="submit">
+                                    <img src="../public/img/usa.JPG" alt=""> English
+                                </button>
+                            </form>
+                            <form action="" method="POST">
+                                <input type="hidden" name="lan" value="es">
+                                <button type="submit">
+                                    <img src="../public/img/mexico.webp" alt=""> Español
+                                </button>
+                            </form>
+                        </div>
+                    </div>
                 </div>
                 <ul class="menu">
                     <?php foreach ($links as $link): ?>
@@ -68,7 +80,7 @@ $links = $content[$lan];
         </div>
     </div>
     <div class="brand">
-        <h1>JLF Metal Gates</h1>
+        <img src="../public/img/logo-blanco.svg" alt="">
     </div>
     <div class="expand">
         <ul class="menu">
@@ -114,6 +126,9 @@ $links = $content[$lan];
 
 <script>
     const dropdownDesktop = document.getElementById('dropdown-desktop');
+    const dropdownMobile = document.getElementById('dropdown-mobile');
+    const linksExpand = document.querySelectorAll('.expand .menu .link a');
+    const linksCollapse = document.querySelectorAll('.collapse .collapse-container .collapse-menu .menu .link a');
 
     function handleAnchorChange(params) {
         var anchor = window.location.hash
@@ -153,17 +168,31 @@ $links = $content[$lan];
         dropdownDesktop.classList.toggle('show');
     }
 
+    function toggleDropdownMobile() {
+        dropdownMobile.classList.toggle('show');
+    }
+
+    function updateActiveLink() {
+        const sections = document.querySelectorAll('.section');
+        let index = sections.length;
+
+        while (--index && window.scrollY + 100 < sections[index].offsetTop) { }
+
+        linksExpand.forEach((link) => link.classList.remove('active'));
+        linksCollapse.forEach((link) => link.classList.remove('active'));
+
+        linksCollapse[index].classList.add('active');
+        linksExpand[index].classList.add('active');
+    }
+
     document.getElementById("collapse-container").addEventListener("click", event => {
         if (event.target == event.currentTarget) {
             document.getElementById("collapse-container").classList.remove("show")
         }
     })
 
-    window.onscroll = function() {
+    window.onscroll = function () {
         changeNavbarColor();
+        updateActiveLink();
     };
-
-    window.onhashchange = function() {
-        handleAnchorChange()
-    }
 </script>

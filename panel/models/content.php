@@ -147,7 +147,6 @@ class ContentModel
                 $conn->commit();
                 return true;
             }
-            
             $stmt->close();
             $conn->rollback();
             return false;

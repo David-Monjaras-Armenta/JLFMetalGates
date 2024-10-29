@@ -50,7 +50,7 @@ $background = $content['background'];
                 <?php if ($lan == "en"): ?>
                     <h2>Contact Us</h2>
                 <?php else: ?>
-                    <h2>Contactános <i class="fa-solid fa-chevron-down"></i></h2>
+                    <h2>Contactános</h2>
                 <?php endif; ?>
                 <i class="fa-solid fa-chevron-down"></i>
             </div>
@@ -110,7 +110,7 @@ $background = $content['background'];
                         <label for="message">Tu mensaje</label>
                         <textarea name="message" id="message" rows="6" onfocus="flotatingFocus('message')" onblur="unfocus('message')"></textarea>
                     </div>
-                    <div class="checkbox">
+                    <div id="checkbox" class="checkbox">
                         <input type="checkbox" name="terms" id="terms">
                         <label for="terms">
                             He leído y acepto el <a href="#">Aviso de Privacidad</a> y los <a href="#">Terminos y Condiciones</a> de este sitio web.
@@ -175,7 +175,7 @@ $background = $content['background'];
         document.getElementById('input-container-phone').classList.remove('invalid')
         document.getElementById('input-container-email').classList.remove('invalid')
         document.getElementById('input-container-message').classList.remove('invalid')
-        document.getElementById('input-container-terms').classList.remove('invalid')
+        document.getElementById('checkbox').classList.remove('invalid')
 
         var result = true
 
@@ -202,7 +202,7 @@ $background = $content['background'];
         }
 
         if (!terms.checked) {
-            document.getElementById('input-container-terms').classList.add('invalid')
+            document.getElementById('checkbox').classList.add('invalid')
             result = false
         }
 

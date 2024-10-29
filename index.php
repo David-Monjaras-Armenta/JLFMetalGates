@@ -31,13 +31,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <title>JLF Metal Gates</title>
 
     <link rel="stylesheet" href="./public/css/style.css">
-    <script src="https://kit.fontawesome.com/93df2c41f8.js" crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/6f07658194.js" crossorigin="anonymous"></script>
 </head>
 
 <body>
     <?php
     include_once "./views/navbar.php"
-    ?>
+        ?>
     <main>
         <?php
         include_once "./views/home.php";
@@ -49,7 +49,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </main>
     <?php
     include_once "./views/footer.php"
-    ?>
+        ?>
     <script>
     </script>
 </body>
