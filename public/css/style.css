@@ -407,7 +407,6 @@ nav > .collapse {
 
 .grid img:nth-child(6) {
     grid-column: span 2;
-    height: 200px;
 }
 
 .button-group {
