@@ -39,10 +39,18 @@ $background = $content['background'];
                 <h2>Contactános</h2>
             <?php endif; ?>
             <?php foreach ($contacts as $contact): ?>
-                <div class="item">
+                <?php
+                $href = explode("=", $contact['text']);
+                if (count($href) > 1) {
+                    $href = $href[0] . "=" . urldecode($href[1]);
+                } else {
+                    $href = $href[0];
+                }
+                ?>
+                <a href="<?= $href ?>" target="_blank" class="item">
                     <img src="<?= $contact['image'][0] ?>" alt="">
-                    <p><?= $contact['text'] ?></p>
-                </div>
+                    <?= $contact['title'] ?>
+                </a>
             <?php endforeach; ?>
         </div>
         <div id="info-collapse" class="contact-info-collapse">
@@ -56,10 +64,18 @@ $background = $content['background'];
             </div>
             <div class="collapse-info">
                 <?php foreach ($contacts as $contact): ?>
-                    <div class="item">
+                    <?php
+                    $href = explode("=", $contact['text']);
+                    if (count($href) > 1) {
+                        $href = $href[0] . "=" . urldecode($href[1]);
+                    } else {
+                        $href = $href[0];
+                    }
+                    ?>
+                    <a href="<?= $href ?>" target="_blank" class="item">
                         <img src="<?= $contact['image'][0] ?>" alt="">
-                        <p><?= $contact['text'] ?></p>
-                    </div>
+                        <?= $contact['title'] ?>
+                    </a>
                 <?php endforeach; ?>
             </div>
         </div>
@@ -73,20 +89,24 @@ $background = $content['background'];
                     </div>
                     <div id="input-container-phone" class="flotating-input">
                         <label for="phone">Your phone</label>
-                        <input type="tel" name="phone" id="phone" onfocus="flotatingFocus('phone')" onblur="unfocus('phone')">
+                        <input type="tel" name="phone" id="phone" onfocus="flotatingFocus('phone')"
+                            onblur="unfocus('phone')">
                     </div>
                     <div id="input-container-email" class="flotating-input">
                         <label for="email">Your email</label>
-                        <input type="email" name="email" id="email" onfocus="flotatingFocus('email')" onblur="unfocus('email')">
+                        <input type="email" name="email" id="email" onfocus="flotatingFocus('email')"
+                            onblur="unfocus('email')">
                     </div>
                     <div id="input-container-message" class="flotating-input">
                         <label for="message">Your message</label>
-                        <textarea name="message" id="message" rows="6" onfocus="flotatingFocus('message')" onblur="unfocus('message')"></textarea>
+                        <textarea name="message" id="message" rows="6" onfocus="flotatingFocus('message')"
+                            onblur="unfocus('message')"></textarea>
                     </div>
                     <div id="input-container-terms" class="checkbox">
                         <input type="checkbox" name="terms" id="terms">
                         <label for="terms">
-                            I have read and accept the <a href="/privacy-notice.php" target="_blank">Privacy Notice and Terms and Conditions</a> of this website.
+                            I have read and accept the <a href="/privacy-notice.php" target="_blank">Privacy Notice and
+                                Terms and Conditions</a> of this website.
                         </label>
                     </div>
                     <button id="btnContact" onclick="saveContact()">
@@ -100,20 +120,24 @@ $background = $content['background'];
                     </div>
                     <div id="input-container-phone" class="flotating-input">
                         <label for="phone">Tu teléfono</label>
-                        <input type="tel" name="phone" id="phone" onfocus="flotatingFocus('phone')" onblur="unfocus('phone')">
+                        <input type="tel" name="phone" id="phone" onfocus="flotatingFocus('phone')"
+                            onblur="unfocus('phone')">
                     </div>
                     <div id="input-container-email" class="flotating-input">
                         <label for="email">Tu correo electrónico</label>
-                        <input type="email" name="email" id="email" onfocus="flotatingFocus('email')" onblur="unfocus('email')">
+                        <input type="email" name="email" id="email" onfocus="flotatingFocus('email')"
+                            onblur="unfocus('email')">
                     </div>
                     <div id="input-container-message" class="flotating-input">
                         <label for="message">Tu mensaje</label>
-                        <textarea name="message" id="message" rows="6" onfocus="flotatingFocus('message')" onblur="unfocus('message')"></textarea>
+                        <textarea name="message" id="message" rows="6" onfocus="flotatingFocus('message')"
+                            onblur="unfocus('message')"></textarea>
                     </div>
                     <div id="checkbox" class="checkbox">
                         <input type="checkbox" name="terms" id="terms">
                         <label for="terms">
-                            He leído y acepto el <a href="/aviso-privacidad.html" target="_blank">Aviso de Privacidad y Terminos y Condiciones</a> de este sitio web.
+                            He leído y acepto el <a href="/aviso-privacidad.html" target="_blank">Aviso de Privacidad y
+                                Terminos y Condiciones</a> de este sitio web.
                         </label>
                     </div>
                     <button id="btnContact" onclick="saveContact()">
@@ -233,12 +257,12 @@ $background = $content['background'];
             fetching = true
 
             fetch('https://jlfmetalgates.com/panel/apis/contact.php', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded'
-                    },
-                    body: urlEncodedData
-                })
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: urlEncodedData
+            })
                 .then(response => response.json())
                 .then(data => {
                     document.getElementById('btnContact').classList.remove("fetching")
